@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "clip-toolkit"
+name = "clip-sdk"
 version = "0.1.0"
 description = "Python SDK for working with CLIP (Context Link Interface Protocol)"
 readme = "README.md"
@@ -62,10 +62,8 @@ Repository = "https://github.com/clip-organization/clip-toolkit.git"
 Issues = "https://github.com/clip-organization/clip-toolkit/issues"
 
 [tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.package-dir]
-"" = "src"
+where = ["."]
+include = ["clip_sdk*"]
 
 [tool.black]
 line-length = 88
