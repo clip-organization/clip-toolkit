@@ -1,4 +1,17 @@
 export { SchemaManager, SchemaManagerOptions, SchemaInfo, CachedSchema } from './schema-manager';
+export { 
+  CLIPValidator, 
+  CLIPValidatorOptions, 
+  ValidationResult, 
+  FormattedError, 
+  CLIPStats 
+} from './clip-validator';
+export { 
+  CLIPToolkit, 
+  CLIPToolkitOptions, 
+  validateCLIP, 
+  validateCLIPBatch 
+} from './clip-toolkit';
 
 // Error classes for better error handling
 export class CLIPValidationError extends Error {
