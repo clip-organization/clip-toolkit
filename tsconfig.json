@@ -19,8 +19,8 @@
   },
   "files": [],
   "references": [
-    { "path": "./packages/validator-core" },
     { "path": "./packages/decoder-lib" },
+    { "path": "./packages/validator-core" },
     { "path": "./packages/encoder-cli" }
   ]
 } 
