@@ -2,6 +2,7 @@
   "name": "clip-toolkit",
   "version": "0.1.0",
   "description": "Open-source tools and SDKs for working with CLIP (Context Link Interface Protocol)",
+  "type": "module",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -36,9 +37,11 @@
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0",
     "prettier": "^3.0.0",
-    "eslint": "^8.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0"
+    "eslint": "^9.0.0",
+    "@eslint/js": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "globals": "^15.0.0"
   },
   "engines": {
     "node": ">=18.0.0",
