@@ -1,402 +1,671 @@
-# clip-decoder
+# CLIP Decoder Library (Python)
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
-[![pytest](https://img.shields.io/badge/Test-pytest-red.svg)](https://pytest.org/)
-[![Type Hints](https://img.shields.io/badge/Type%20Hints-Yes-brightgreen.svg)](https://docs.python.org/3/library/typing.html)
+A Python library for visual encoding and decoding of CLIP (Context Link Interface Protocol) objects. This package provides the foundation for converting CLIP data into visual formats like QR codes, DataMatrix codes, and the upcoming HexMatrix format.
 
-**Stub Implementation** - Visual CLIP representation decoder library for Python
+[![PyPI version](https://badge.fury.io/py/clip-decoder.svg)](https://badge.fury.io/py/clip-decoder)
+[![Python CI](https://github.com/your-org/clip-toolkit/workflows/Python%20CI/badge.svg)](https://github.com/your-org/clip-toolkit/actions)
 
-> ⚠️ **Note**: This is currently a stub implementation. Visual encoding/decoding features are planned for a future release.
+> **⚠️ Note**: This is currently a stub implementation providing interfaces and structure for future development. The visual encoding/decoding functionality is planned for future releases.
 
-## Overview
+## 🚀 Quick Start
 
-The CLIP Decoder Library provides placeholder implementations for encoding and decoding visual CLIP representations, including QR codes and HexMatrix formats. This stub implementation defines the classes and validates parameters while raising `NotImplementedError` for the actual encoding/decoding operations.
-
-## Installation
+### Installation
 
 ```bash
+# Install from PyPI
 pip install clip-decoder
+
+# Or install with optional dependencies
+pip install clip-decoder[all]  # Includes image processing and development tools
 ```
 
-Or for development:
-
-```bash
-pip install -e .
-```
-
-## Usage
-
-### Basic Import
+### Basic Usage
 
 ```python
-from decoder_lib import (
-    DecodeOptions,
-    EncodeOptions,
-    VisualData,
-    decode_visual,
-    encode_visual,
-    is_format_supported,
-    get_library_info,
-    get_supported_formats
-)
-```
+from clip_decoder import CLIPEncoder, CLIPDecoder, VisualFormat
 
-### Decode Visual CLIP (Stub)
+# Create encoder/decoder instances
+encoder = CLIPEncoder()
+decoder = CLIPDecoder()
 
-```python
-from decoder_lib import decode_visual, DecodeOptions
-
-image_data = b'\x89PNG\r\n\x1a\n...'  # QR code or HexMatrix data
-options = DecodeOptions(format='qr', error_correction='medium')
-
-try:
-    clip_object = decode_visual(image_data, options)
-    # This will raise: NotImplementedError("Visual CLIP decoding is planned for a future release")
-except NotImplementedError as e:
-    print(f'Expected: {e}')
-```
-
-### Encode CLIP Object (Stub)
-
-```python
-from decoder_lib import encode_visual, EncodeOptions
-
-clip_object = {
-    '@context': 'https://clipprotocol.org/v1',
-    'type': 'Venue',
-    'id': 'clip:venue:example-123',
+# Encode CLIP to QR code (future implementation)
+clip_data = {
+    'type': 'venue',
+    'version': '1.0.0',
     'name': 'Example Venue',
-    'description': 'A sample venue for demonstration'
+    # ... more CLIP data
 }
 
-options = EncodeOptions(format='qr', error_correction='high', size=256)
-
 try:
-    visual_data = encode_visual(clip_object, options)
-    # This will raise: NotImplementedError("Visual CLIP encoding is planned for a future release")
+    qr_code = encoder.encode_to_qr(clip_data)
+    print('QR Code generated:', qr_code.data)
 except NotImplementedError as e:
-    print(f'Expected: {e}')
+    print('Not implemented yet:', e)
+
+# Decode QR code back to CLIP (future implementation)
+try:
+    decoded_clip = decoder.decode_from_qr(qr_code_data)
+    print('Decoded CLIP:', decoded_clip)
+except NotImplementedError as e:
+    print('Not implemented yet:', e)
 ```
 
-### Check Format Support
+## 📦 Core Classes
+
+### CLIPEncoder
+
+The main encoding class for converting CLIP objects to visual formats:
 
 ```python
-from decoder_lib import is_format_supported, get_library_info
+from clip_decoder import CLIPEncoder, QREncodeOptions
+from typing import Dict, Any
 
-print(is_format_supported('qr'))        # True (planned)
-print(is_format_supported('hexmatrix')) # True (planned)  
-print(is_format_supported('barcode'))   # False
+encoder = CLIPEncoder()
 
-info = get_library_info()
-print(info)
-# {
-#     'name': 'clip-decoder-python',
-#     'version': '0.1.0',
-#     'status': 'stub-implementation',
-#     'supported_formats': [],
-#     'planned_formats': ['qr', 'hexmatrix']
-# }
-```
+# Available encoding methods (future implementation)
+class CLIPEncoder:
+    def encode_to_qr(self, data: Dict[str, Any], options: QREncodeOptions = None) -> QRCodeResult:
+        """Encode CLIP data to QR code"""
+        pass
+    
+    def encode_to_datamatrix(self, data: Dict[str, Any], options: DataMatrixOptions = None) -> DataMatrixResult:
+        """Encode CLIP data to DataMatrix code"""
+        pass
+    
+    def encode_to_hexmatrix(self, data: Dict[str, Any], options: HexMatrixOptions = None) -> HexMatrixResult:
+        """Encode CLIP data to HexMatrix format"""
+        pass
+    
+    def encode(self, data: Dict[str, Any], format: VisualFormat, options: EncodeOptions = None) -> VisualResult:
+        """Generic encoding method"""
+        pass
+    
+    def estimate_size(self, data: Dict[str, Any], format: VisualFormat) -> SizeEstimate:
+        """Estimate encoded size"""
+        pass
+    
+    def validate_for_encoding(self, data: Dict[str, Any]) -> ValidationResult:
+        """Validate data for encoding"""
+        pass
+    
+    def get_supported_formats(self) -> List[VisualFormat]:
+        """Get list of supported formats"""
+        pass
 
-### Working with Data Classes
-
-```python
-from decoder_lib import DecodeOptions, EncodeOptions, VisualData
-
-# Create decode options
-decode_opts = DecodeOptions(
-    format='qr',
-    error_correction='high',
-    strict_mode=True
+# Example configuration
+options = QREncodeOptions(
+    error_correction='M',
+    version='auto',
+    mask_pattern='auto',
+    quiet_zone=4,
+    scale=8,
+    margin=10,
+    color=QRColor(dark='#000000', light='#FFFFFF')
 )
+```
 
-# Create encode options
-encode_opts = EncodeOptions(
-    format='hexmatrix',
-    error_correction='medium',
-    size=512,
-    margin=4
+### CLIPDecoder
+
+The main decoding class for extracting CLIP objects from visual formats:
+
+```python
+from clip_decoder import CLIPDecoder, DecodeOptions
+from typing import Union, Optional
+import numpy as np
+
+decoder = CLIPDecoder()
+
+# Available decoding methods (future implementation)
+class CLIPDecoder:
+    def decode_from_qr(self, image: Union[np.ndarray, bytes, str]) -> Dict[str, Any]:
+        """Decode CLIP data from QR code"""
+        pass
+    
+    def decode_from_datamatrix(self, image: Union[np.ndarray, bytes, str]) -> Dict[str, Any]:
+        """Decode CLIP data from DataMatrix code"""
+        pass
+    
+    def decode_from_hexmatrix(self, image: Union[np.ndarray, bytes, str]) -> Dict[str, Any]:
+        """Decode CLIP data from HexMatrix format"""
+        pass
+    
+    def decode(self, image: Union[np.ndarray, bytes, str], format: Optional[VisualFormat] = None) -> Dict[str, Any]:
+        """Generic decoding method"""
+        pass
+    
+    def detect_format(self, image: Union[np.ndarray, bytes, str]) -> Optional[VisualFormat]:
+        """Detect visual format from image"""
+        pass
+    
+    def validate_image(self, image: Union[np.ndarray, bytes, str]) -> bool:
+        """Validate image data"""
+        pass
+    
+    def get_image_info(self, image: Union[np.ndarray, bytes, str]) -> ImageInfo:
+        """Get image information"""
+        pass
+
+# Example usage (when implemented)
+decode_options = DecodeOptions(
+    formats=['qr', 'datamatrix'],
+    error_correction=True,
+    timeout=5000,
+    preprocess_image=True
 )
+```
 
-# Create visual data structure
-visual = VisualData(
-    format='qr',
-    data=b'encoded_data',
-    width=256,
-    height=256,
-    metadata={'version': '1.0', 'timestamp': '2024-01-01T00:00:00Z'}
+## 🔧 Visual Formats
+
+### Supported Formats (Planned)
+
+```python
+from enum import Enum
+from dataclasses import dataclass
+from typing import Optional
+
+class VisualFormat(Enum):
+    QR = 'qr'
+    DATAMATRIX = 'datamatrix'
+    HEXMATRIX = 'hexmatrix'
+    AZTEC = 'aztec'
+    PDF417 = 'pdf417'
+
+@dataclass
+class QRCodeResult:
+    format: str = 'qr'
+    data: str = ''              # Base64 encoded image
+    raw_data: bytes = b''       # Raw image data
+    version: int = 0            # QR version (1-40)
+    error_correction: str = ''  # L, M, Q, H
+    modules: int = 0            # Size in modules
+    quiet_zone: int = 0         # Quiet zone size
+    metadata: Optional[dict] = None
+
+@dataclass
+class DataMatrixResult:
+    format: str = 'datamatrix'
+    data: str = ''
+    raw_data: bytes = b''
+    symbol_size: str = ''       # e.g., "32x32"
+    capacity: int = 0           # Data capacity in bytes
+    metadata: Optional[dict] = None
+
+@dataclass
+class HexMatrixResult:
+    format: str = 'hexmatrix'
+    data: str = ''
+    raw_data: bytes = b''
+    hex_size: int = 0           # Hexagon grid size
+    layers: int = 0             # Number of concentric layers
+    compression: str = ''       # Compression algorithm used
+    metadata: Optional[dict] = None
+```
+
+### Format Capabilities
+
+```python
+from clip_decoder import CLIPEncoder
+
+encoder = CLIPEncoder()
+
+# Get format information
+format_info = encoder.get_format_info('qr')
+
+@dataclass
+class FormatInfo:
+    name: str
+    description: str
+    max_capacity: int           # Maximum bytes
+    error_correction: bool      # Supports error correction
+    scalable: bool             # Can be resized
+    common_usage: List[str]    # Common use cases
+    browser_support: dict      # Browser support info
+
+# Example format information
+qr_info = FormatInfo(
+    name='QR Code',
+    description='Quick Response code, widely supported 2D barcode',
+    max_capacity=4296,
+    error_correction=True,
+    scalable=True,
+    common_usage=['mobile', 'print', 'display'],
+    browser_support={'encode': True, 'decode': True}
 )
 ```
 
-## API Reference
+## 🎯 Use Cases (Planned)
 
-### Data Classes
+### Mobile App Integration
 
-#### `DecodeOptions`
 ```python
-@dataclass
-class DecodeOptions:
-    format: Optional[str] = None
-    error_correction: Optional[str] = None
-    strict_mode: bool = False
+from clip_decoder import CLIPEncoder
+from typing import Dict, Any
+
+async def generate_mobile_qr(venue_data: Dict[str, Any]) -> str:
+    """Generate QR code for mobile app"""
+    encoder = CLIPEncoder()
+    
+    qr_options = QREncodeOptions(
+        size='large',
+        error_correction='H',  # High error correction for mobile
+        format='png',
+        scale=8
+    )
+    
+    try:
+        qr_code = await encoder.encode_to_qr(venue_data, qr_options)
+        return qr_code.data  # Base64 image data
+    except Exception as e:
+        raise RuntimeError(f"QR generation failed: {e}")
+
+async def decode_from_camera(image_data: np.ndarray) -> Dict[str, Any]:
+    """Decode from camera input"""
+    decoder = CLIPDecoder()
+    
+    try:
+        clip_data = await decoder.decode(image_data)
+        return clip_data
+    except Exception as e:
+        raise RuntimeError(f"Decode failed: {e}")
 ```
 
-**Valid values:**
-- `format`: 'qr' | 'hexmatrix' | None
-- `error_correction`: 'low' | 'medium' | 'high' | None
+### Print Applications
 
-#### `EncodeOptions`
 ```python
-@dataclass
-class EncodeOptions:
-    format: str
-    error_correction: str = 'medium'
-    size: Optional[int] = None
-    margin: Optional[int] = None
+from clip_decoder import CLIPEncoder, VisualFormat
+
+def generate_printable_code(clip_data: Dict[str, Any], format: VisualFormat = VisualFormat.QR) -> VisualResult:
+    """Generate high-resolution codes for printing"""
+    encoder = CLIPEncoder()
+    
+    print_options = EncodeOptions(
+        resolution=300,  # 300 DPI
+        size={'width': 2, 'height': 2},  # 2x2 inches
+        format='svg',  # Vector format for scaling
+        error_correction='H',
+        quiet_zone=8  # Larger quiet zone for print
+    )
+    
+    if format == VisualFormat.QR:
+        return encoder.encode_to_qr(clip_data, print_options)
+    else:
+        return encoder.encode_to_datamatrix(clip_data, print_options)
 ```
 
-**Valid values:**
-- `format`: 'qr' | 'hexmatrix' (required)
-- `error_correction`: 'low' | 'medium' | 'high'
+### Web Integration
 
-#### `VisualData`
 ```python
-@dataclass
-class VisualData:
-    format: str
-    data: bytes
-    width: Optional[int] = None
-    height: Optional[int] = None
-    metadata: Optional[Dict[str, Any]] = None
+import asyncio
+from typing import List, Union
+import base64
+
+class WebCLIPDecoder:
+    """Browser-based encoding/decoding"""
+    
+    def __init__(self):
+        self.decoder = CLIPDecoder()
+    
+    async def decode_from_file(self, file_data: bytes) -> Dict[str, Any]:
+        """Decode from file upload"""
+        try:
+            clip_data = await self.decoder.decode(file_data)
+            return clip_data
+        except Exception as e:
+            raise RuntimeError(f"File decode failed: {e}")
+    
+    async def decode_from_base64(self, base64_data: str) -> Dict[str, Any]:
+        """Decode from base64 image data"""
+        try:
+            image_data = base64.b64decode(base64_data)
+            clip_data = await self.decoder.decode(image_data)
+            return clip_data
+        except Exception as e:
+            raise RuntimeError(f"Base64 decode failed: {e}")
+    
+    async def batch_decode(self, images: List[Union[bytes, str]]) -> List[Dict[str, Any]]:
+        """Decode multiple images"""
+        tasks = [self.decoder.decode(img) for img in images]
+        return await asyncio.gather(*tasks, return_exceptions=True)
 ```
 
-### Functions
+## 🧪 Testing (Current Implementation)
 
-#### `decode_visual(image_data, options=None)`
-Placeholder for decoding visual CLIP representations.
-
-**Parameters:**
-- `image_data: Union[bytes, str]` - Image data to decode
-- `options: Optional[DecodeOptions]` - Decode options
-
-**Returns:** `Dict[str, Any]` (when implemented)
-
-**Raises:** `NotImplementedError` - This is a stub implementation
-
-#### `encode_visual(clip_object, options)`
-Placeholder for encoding CLIP objects as visual representations.
-
-**Parameters:**
-- `clip_object: Dict[str, Any]` - CLIP object dictionary to encode
-- `options: EncodeOptions` - Encode options
-
-**Returns:** `VisualData` (when implemented)
-
-**Raises:** `NotImplementedError` - This is a stub implementation
-
-#### `is_format_supported(format_name)`
-Check if a format is planned to be supported.
-
-**Parameters:**
-- `format_name: str` - Format name to check
-
-**Returns:** `bool` - True if format is recognized
-
-#### `get_library_info()`
-Get information about the decoder library.
-
-**Returns:** `Dict[str, Any]` - Library information
-
-#### `get_supported_formats()`
-Get list of planned supported formats.
-
-**Returns:** `List[str]` - List of format names
-
-## Development
-
-### Setup Development Environment
-
-```bash
-# Clone the repository
-git clone https://github.com/clip-organization/clip-toolkit.git
-cd clip-toolkit/packages/decoder-python
-
-# Install development dependencies
-pip install -e ".[dev]"
-```
+The current stub implementation includes comprehensive tests that validate the interface structure:
 
 ### Running Tests
 
 ```bash
+# Install development dependencies
+pip install -e ".[dev]"
+
 # Run all tests
 pytest
 
 # Run with coverage
-pytest --cov=decoder_lib
+pytest --cov=clip_decoder
 
-# Run specific test file
-pytest tests/test_decoder_lib.py
+# Run specific test categories
+pytest tests/test_encoder.py
+pytest tests/test_decoder.py
+pytest tests/test_formats.py
 
-# Run with verbose output
-pytest -v
+# Run performance tests
+pytest tests/test_performance.py -v
 ```
 
-### Code Quality
-
-```bash
-# Format code
-black decoder_lib/ tests/
-
-# Sort imports
-isort decoder_lib/ tests/
-
-# Type checking
-mypy decoder_lib/
-
-# Linting
-flake8 decoder_lib/ tests/
-```
-
-## Test Coverage
-
-The stub implementation includes comprehensive tests covering:
-
-- ✅ Data class construction and validation
-- ✅ Parameter validation for all functions
-- ✅ Error handling and expected exceptions
-- ✅ Function existence and callability
-- ✅ Module exports and imports
-- ✅ Type safety and consistency
-
-**Test Results:** 33/33 tests passing (100% success rate)
-
-## Planned Features
-
-When the full implementation is available, this library will support:
-
-### Visual Formats
-- **QR Codes**: Standard QR code generation and reading with PIL/qrcode
-- **HexMatrix**: Custom hexagonal matrix format optimized for CLIP
-
-### Encoding Features
-- Multiple error correction levels
-- Customizable size and margins
-- Metadata embedding
-- Batch processing
-- Image format outputs (PNG, SVG, etc.)
-
-### Decoding Features
-- Automatic format detection
-- Error correction and recovery
-- Strict/lenient parsing modes
-- Multi-threaded batch processing
-- Support for various input formats
-
-### Advanced Features
-- Image preprocessing (rotation, scaling, noise reduction)
-- Performance optimizations with NumPy
-- Integration with computer vision libraries
-- Real-time camera decoding support
-
-## Error Handling
-
-The stub implementation provides comprehensive parameter validation:
+### Test Structure
 
 ```python
-# These will raise ValueError during construction/validation
-DecodeOptions(format='invalid')                      # "Format must be 'qr' or 'hexmatrix'"
-EncodeOptions(format='invalid')                      # "Format must be 'qr' or 'hexmatrix'"
-decode_visual(None)                                  # "Image data is required"
-decode_visual(b'')                                   # "Image data is required"
-encode_visual(None, options)                         # "CLIP object is required"
-encode_visual({}, options)                           # "CLIP object is required"
-encode_visual({'@context': 'test'}, options)        # "Required CLIP field missing: type"
+import pytest
+from clip_decoder import CLIPEncoder, CLIPDecoder, VisualFormat, NotImplementedError
+
+class TestCLIPEncoder:
+    def setup_method(self):
+        self.encoder = CLIPEncoder()
+    
+    def test_encoder_instantiation(self):
+        """Test encoder can be instantiated"""
+        assert isinstance(self.encoder, CLIPEncoder)
+    
+    def test_encoding_methods_not_implemented(self):
+        """Test encoding methods throw NotImplementedError"""
+        clip_data = {'type': 'venue', 'version': '1.0.0', 'name': 'Test'}
+        
+        with pytest.raises(NotImplementedError, match="Not implemented"):
+            self.encoder.encode_to_qr(clip_data)
+        
+        with pytest.raises(NotImplementedError, match="Not implemented"):
+            self.encoder.encode_to_datamatrix(clip_data)
+        
+        with pytest.raises(NotImplementedError, match="Not implemented"):
+            self.encoder.encode_to_hexmatrix(clip_data)
+    
+    def test_parameter_validation(self):
+        """Test parameter validation before NotImplementedError"""
+        with pytest.raises(ValueError, match="Invalid CLIP data"):
+            self.encoder.encode_to_qr(None)
+        
+        with pytest.raises(ValueError, match="Missing required"):
+            self.encoder.encode_to_qr({})
+
+class TestCLIPDecoder:
+    def setup_method(self):
+        self.decoder = CLIPDecoder()
+    
+    def test_image_validation(self):
+        """Test image data validation"""
+        with pytest.raises(ValueError, match="Invalid image data"):
+            self.decoder.decode_from_qr(None)
+        
+        with pytest.raises(ValueError, match="Empty image data"):
+            self.decoder.decode_from_qr(b'')
+    
+    def test_format_detection_interface(self):
+        """Test format detection interface"""
+        mock_image_data = b'\x89PNG\r\n\x1a\n'  # PNG header
+        
+        with pytest.raises(NotImplementedError, match="Not implemented"):
+            self.decoder.detect_format(mock_image_data)
 ```
 
-## Type Safety
+## 🔮 Future Implementation
 
-This library uses Python type hints extensively:
+### Roadmap
+
+**Phase 1: QR Code Support**
+- Basic QR code encoding/decoding using `qrcode` and `pyzbar`
+- Error correction levels
+- Custom styling options
+- PIL/Pillow integration
+
+**Phase 2: DataMatrix Support**
+- Compact encoding for small CLIP objects using `pylibdmtx`
+- Industrial printing applications
+- Mobile scanning optimization
+
+**Phase 3: HexMatrix Format**
+- CLIP-specific visual format
+- Custom hexagonal grid implementation
+- Enhanced error correction
+- Aesthetic appeal for consumer applications
+
+**Phase 4: Advanced Features**
+- Multi-format detection using `opencv-python`
+- Batch processing with `asyncio`
+- Real-time camera scanning
+- Performance optimizations with `numba`
+
+### Architecture Goals
 
 ```python
-from typing import Dict, Any, Union, Optional, List
+from abc import ABC, abstractmethod
+from typing import Protocol, runtime_checkable
 
-# All functions are fully typed
-def decode_visual(
-    image_data: Union[bytes, str], 
-    options: Optional[DecodeOptions] = None
-) -> Dict[str, Any]:
-    ...
+# Future architecture will support:
 
-# Data classes use proper typing
+@runtime_checkable
+class VisualFormatPlugin(Protocol):
+    """Plugin interface for visual formats"""
+    name: str
+    encoder: 'FormatEncoder'
+    decoder: 'FormatDecoder'
+    capabilities: 'FormatCapabilities'
+
+class StreamingEncoder(ABC):
+    """Streaming support for large data"""
+    
+    @abstractmethod
+    async def encode_stream(self, data_stream) -> AsyncIterator[VisualResult]:
+        pass
+    
+    @abstractmethod
+    async def decode_stream(self, image_stream) -> AsyncIterator[Dict[str, Any]]:
+        pass
+
+class RealtimeDecoder(ABC):
+    """Real-time processing"""
+    
+    @abstractmethod
+    def start_scanning(self, video_source) -> None:
+        pass
+    
+    @abstractmethod
+    def on_detected(self, callback) -> None:
+        pass
+    
+    @abstractmethod
+    def stop_scanning(self) -> None:
+        pass
+```
+
+## 📚 API Reference
+
+### Current Classes
+
+```python
+# Core classes (stub implementation)
+class CLIPEncoder:
+    def encode_to_qr(self, data: Dict[str, Any], options: QREncodeOptions = None) -> QRCodeResult:
+        """Encode CLIP data to QR code (not implemented)"""
+        raise NotImplementedError("QR encoding not yet implemented")
+    
+    def encode_to_datamatrix(self, data: Dict[str, Any], options: DataMatrixOptions = None) -> DataMatrixResult:
+        """Encode CLIP data to DataMatrix (not implemented)"""
+        raise NotImplementedError("DataMatrix encoding not yet implemented")
+    
+    def encode_to_hexmatrix(self, data: Dict[str, Any], options: HexMatrixOptions = None) -> HexMatrixResult:
+        """Encode CLIP data to HexMatrix (not implemented)"""
+        raise NotImplementedError("HexMatrix encoding not yet implemented")
+
+class CLIPDecoder:
+    def decode_from_qr(self, image: ImageSource) -> Dict[str, Any]:
+        """Decode CLIP data from QR code (not implemented)"""
+        raise NotImplementedError("QR decoding not yet implemented")
+    
+    def decode_from_datamatrix(self, image: ImageSource) -> Dict[str, Any]:
+        """Decode CLIP data from DataMatrix (not implemented)"""
+        raise NotImplementedError("DataMatrix decoding not yet implemented")
+    
+    def decode_from_hexmatrix(self, image: ImageSource) -> Dict[str, Any]:
+        """Decode CLIP data from HexMatrix (not implemented)"""
+        raise NotImplementedError("HexMatrix decoding not yet implemented")
+
+# Type definitions
+ImageSource = Union[np.ndarray, bytes, str, 'PIL.Image.Image']
+
 @dataclass
-class VisualData:
+class EncodeOptions:
+    format: Optional[str] = None
+    size: Optional[Union[int, Dict[str, int]]] = None
+    error_correction: Optional[str] = None
+    margin: Optional[int] = None
+
+@dataclass
+class VisualResult:
     format: str
-    data: bytes
-    width: Optional[int] = None
-    height: Optional[int] = None
+    data: str
+    raw_data: bytes
     metadata: Optional[Dict[str, Any]] = None
 ```
 
-## Integration Examples
-
-### With CLIP SDK
+### Exception Types
 
 ```python
-# Future integration example
-from clip_sdk import CLIPValidator
-from decoder_lib import decode_visual
+class NotImplementedError(Exception):
+    """Raised when a feature is not yet implemented"""
+    def __init__(self, feature: str):
+        super().__init__(f"{feature} is not yet implemented")
+        self.feature = feature
 
-# Decode and validate in one step
-image_data = load_qr_code('clip.png')
-clip_dict = decode_visual(image_data)  # When implemented
-validator = CLIPValidator()
-is_valid = validator.validate_dict(clip_dict)
+class InvalidInputError(ValueError):
+    """Raised when input data is invalid"""
+    pass
+
+class EncodingError(Exception):
+    """Raised when encoding fails"""
+    def __init__(self, message: str, format: str):
+        super().__init__(message)
+        self.format = format
+
+class DecodingError(Exception):
+    """Raised when decoding fails"""
+    def __init__(self, message: str, format: Optional[str] = None):
+        super().__init__(message)
+        self.format = format
 ```
 
-### With CLI Tools
+## 🔧 Configuration
 
+### Environment Variables
+
+```bash
+# Image processing configuration
+export CLIP_DECODER_BACKEND=PIL  # PIL, OpenCV, or auto
+export CLIP_DECODER_CACHE_DIR=/tmp/clip-decoder-cache
+export CLIP_DECODER_MAX_IMAGE_SIZE=10485760  # 10MB
+
+# Performance configuration
+export CLIP_DECODER_THREADS=4
+export CLIP_DECODER_TIMEOUT=30
+export CLIP_DECODER_BATCH_SIZE=10
+
+# Logging
+export CLIP_DECODER_LOG_LEVEL=INFO
+```
+
+### Configuration File
+
+Create `~/.clip-decoder.yaml`:
+
+```yaml
+encoding:
+  default_format: qr
+  quality: high
+  error_correction: M
+
+decoding:
+  auto_detect: true
+  preprocess: true
+  timeout: 30
+
+image_processing:
+  backend: PIL
+  max_size: 10485760
+  cache_enabled: true
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Import Errors**
 ```python
-# Future CLI integration example
+# Ensure proper installation
 import sys
-from decoder_lib import decode_visual
+print(sys.path)
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: decode_clip <image_file>")
-        return
-    
-    with open(sys.argv[1], 'rb') as f:
-        image_data = f.read()
-    
-    try:
-        clip_object = decode_visual(image_data)  # When implemented
-        print(json.dumps(clip_object, indent=2))
-    except Exception as e:
-        print(f"Error: {e}")
-
-if __name__ == '__main__':
-    main()
+# Reinstall if needed
+pip uninstall clip-decoder
+pip install clip-decoder
 ```
 
-## Contributing
+**Image Processing Issues**
+```python
+from clip_decoder import CLIPDecoder
+import logging
 
-This is part of the CLIP Toolkit monorepo. See the main repository for contribution guidelines.
+# Enable debug logging
+logging.basicConfig(level=logging.DEBUG)
 
-### Development Workflow
+decoder = CLIPDecoder()
 
-1. Fork the repository
-2. Create a feature branch
-3. Make changes with tests
-4. Run the test suite
-5. Submit a pull request
+# Test image validation
+try:
+    result = decoder.validate_image(image_data)
+    print(f"Image valid: {result}")
+except Exception as e:
+    print(f"Image validation failed: {e}")
+```
 
-## License
+**Performance Issues**
+```python
+# Use async processing for multiple images
+import asyncio
+from clip_decoder import CLIPDecoder
 
-MIT © CLIP Organization
+async def process_images_async(images):
+    decoder = CLIPDecoder()
+    tasks = [decoder.decode(img) for img in images]
+    return await asyncio.gather(*tasks, return_exceptions=True)
 
-## Related Packages
+# Batch processing
+def process_images_batch(images, batch_size=10):
+    decoder = CLIPDecoder()
+    results = []
+    
+    for i in range(0, len(images), batch_size):
+        batch = images[i:i + batch_size]
+        batch_results = [decoder.decode(img) for img in batch]
+        results.extend(batch_results)
+    
+    return results
+```
 
-- `clip-sdk` - Core Python SDK for CLIP operations
-- `@clip-toolkit/decoder-lib` - TypeScript decoder library (this package's counterpart)
-- `@clip-toolkit/encoder-cli` - Command-line encoding tools
-- `@clip-toolkit/validator-core` - CLIP object validation 
+## 🔗 Related
+
+- **[Decoder Library (TypeScript)](../decoder-lib/README.md)** - TypeScript implementation
+- **[Encoder CLI](../encoder-cli/README.md)** - Command-line tool for CLIP objects
+- **[Python SDK](../sdk-python/README.md)** - Python library for CLIP manipulation
+- **[Validator Core](../validator-core/README.md)** - Core validation logic
+
+## 📄 License
+
+MIT License - see [LICENSE](../../LICENSE) for details.
+
+---
+
+**Part of the [CLIP Toolkit](../../README.md) ecosystem** 
