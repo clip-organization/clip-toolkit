@@ -1,0 +1,159 @@
+version: 2
+
+updates:
+  # Main Node.js dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "npm"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    reviewers:
+      - "maintainers"
+    assignees:
+      - "maintainers"
+    groups:
+      development-dependencies:
+        dependency-type: "development"
+        patterns:
+          - "@types/*"
+          - "eslint*"
+          - "jest*"
+          - "typescript"
+          - "ts-*"
+      security-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+
+  # TypeScript Encoder CLI package
+  - package-ecosystem: "npm"
+    directory: "/packages/encoder-cli"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "encoder-cli"
+      - "npm"
+    commit-message:
+      prefix: "chore(encoder-cli)"
+      include: "scope"
+
+  # TypeScript Decoder Library package
+  - package-ecosystem: "npm"
+    directory: "/packages/decoder-lib"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "10:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "decoder-lib"
+      - "npm"
+    commit-message:
+      prefix: "chore(decoder-lib)"
+      include: "scope"
+
+  # TypeScript Validator Core package
+  - package-ecosystem: "npm"
+    directory: "/packages/validator-core"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "11:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "validator-core"
+      - "npm"
+    commit-message:
+      prefix: "chore(validator-core)"
+      include: "scope"
+
+  # Python SDK package
+  - package-ecosystem: "pip"
+    directory: "/packages/sdk-python"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "09:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "sdk-python"
+      - "python"
+    commit-message:
+      prefix: "chore(sdk-python)"
+      include: "scope"
+    groups:
+      testing-dependencies:
+        patterns:
+          - "pytest*"
+          - "coverage*"
+          - "*test*"
+      development-dependencies:
+        patterns:
+          - "black"
+          - "isort"
+          - "flake8"
+          - "mypy"
+          - "bandit"
+
+  # Python Decoder package
+  - package-ecosystem: "pip"
+    directory: "/packages/decoder-python"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "10:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "decoder-python"
+      - "python"
+    commit-message:
+      prefix: "chore(decoder-python)"
+      include: "scope"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+      time: "09:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 2
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "ci"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"
+    groups:
+      actions:
+        patterns:
+          - "actions/*"
+          - "codecov/*"
+        update-types:
+          - "minor"
+          - "patch" 

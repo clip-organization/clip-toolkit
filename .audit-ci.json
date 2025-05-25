@@ -1,0 +1,24 @@
+{
+  "low": true,
+  "moderate": true,
+  "high": true,
+  "critical": true,
+  "allowlist": [
+  ],
+  "skipDev": false,
+  "package-manager": "npm",
+  "report-type": "full",
+  "summary": true,
+  "retry": {
+    "count": 3,
+    "delay": 5000
+  },
+  "advisories": {
+    "exclude": [
+    ]
+  },
+  "output": {
+    "format": "text",
+    "file": "audit-report.txt"
+  }
+} 

@@ -1,0 +1,503 @@
+name: Publish Packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+          - prerelease
+      publish_npm:
+        description: 'Publish TypeScript packages to npm'
+        required: true
+        default: true
+        type: boolean
+      publish_pypi:
+        description: 'Publish Python packages to PyPI'
+        required: true
+        default: true
+        type: boolean
+      dry_run:
+        description: 'Perform dry run (do not actually publish)'
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '18.x'
+  PYTHON_VERSION: '3.9'
+
+jobs:
+  validate:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      should-publish-npm: ${{ steps.conditions.outputs.publish-npm }}
+      should-publish-pypi: ${{ steps.conditions.outputs.publish-pypi }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          python -m pip install --upgrade pip
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            VERSION="${{ github.event.release.tag_name }}"
+            VERSION=${VERSION#v}  # Remove 'v' prefix if present
+          else
+            VERSION=$(node -p "require('./package.json').version")
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Determined version: $VERSION"
+
+      - name: Determine publish conditions
+        id: conditions
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "publish-npm=true" >> $GITHUB_OUTPUT
+            echo "publish-pypi=true" >> $GITHUB_OUTPUT
+          else
+            echo "publish-npm=${{ inputs.publish_npm }}" >> $GITHUB_OUTPUT
+            echo "publish-pypi=${{ inputs.publish_pypi }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate version format
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          if ! [[ $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+(-.+)?$ ]]; then
+            echo "❌ Invalid version format: $VERSION"
+            exit 1
+          fi
+          echo "✅ Valid version format: $VERSION"
+
+      - name: Check for existing releases
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          
+          # Check npm registry for TypeScript packages
+          echo "Checking npm registry for existing versions..."
+          for package in encoder-cli decoder-lib validator-core; do
+            if npm view "@clip-toolkit/$package@$VERSION" version 2>/dev/null; then
+              echo "❌ Version $VERSION already exists for @clip-toolkit/$package"
+              exit 1
+            fi
+          done
+          
+          # Check PyPI for Python packages
+          echo "Checking PyPI for existing versions..."
+          pip install requests
+          python -c "
+          import requests
+          import sys
+          
+          packages = ['clip-sdk', 'clip-decoder']
+          version = '$VERSION'
+          
+          for package in packages:
+              try:
+                  response = requests.get(f'https://pypi.org/pypi/{package}/{version}/json')
+                  if response.status_code == 200:
+                      print(f'❌ Version {version} already exists for {package}')
+                      sys.exit(1)
+              except:
+                  pass  # Version doesn't exist, which is good
+          
+          print('✅ Version $VERSION is available for all packages')
+          "
+
+  build-typescript:
+    name: Build TypeScript Packages
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-publish-npm == 'true'
+    strategy:
+      matrix:
+        package: [encoder-cli, decoder-lib, validator-core]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update package version
+        run: |
+          cd packages/${{ matrix.package }}
+          npm version ${{ needs.validate.outputs.version }} --no-git-tag-version
+
+      - name: Build package
+        run: |
+          cd packages/${{ matrix.package }}
+          npm run build
+
+      - name: Run tests
+        run: |
+          cd packages/${{ matrix.package }}
+          npm test
+
+      - name: Validate package
+        run: |
+          cd packages/${{ matrix.package }}
+          npm pack --dry-run
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: typescript-${{ matrix.package }}-${{ needs.validate.outputs.version }}
+          path: packages/${{ matrix.package }}/
+          retention-days: 1
+
+  build-python:
+    name: Build Python Packages
+    runs-on: ubuntu-latest
+    needs: validate
+    if: needs.validate.outputs.should-publish-pypi == 'true'
+    strategy:
+      matrix:
+        package: [sdk-python, decoder-python]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine toml
+
+      - name: Update package version
+        run: |
+          cd packages/${{ matrix.package }}
+          python -c "
+          import toml
+          import sys
+          
+          try:
+              with open('pyproject.toml', 'r') as f:
+                  data = toml.load(f)
+              
+              data['project']['version'] = '${{ needs.validate.outputs.version }}'
+              
+              with open('pyproject.toml', 'w') as f:
+                  toml.dump(data, f)
+              
+              print('✅ Updated version to ${{ needs.validate.outputs.version }}')
+          except Exception as e:
+              print(f'❌ Failed to update version: {e}')
+              sys.exit(1)
+          "
+
+      - name: Install package dependencies
+        run: |
+          cd packages/${{ matrix.package }}
+          pip install -e ".[dev]" || pip install -e .
+
+      - name: Run tests
+        run: |
+          cd packages/${{ matrix.package }}
+          python -m pytest -v
+
+      - name: Build package
+        run: |
+          cd packages/${{ matrix.package }}
+          python -m build
+
+      - name: Validate package
+        run: |
+          cd packages/${{ matrix.package }}
+          twine check dist/*
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-${{ matrix.package }}-${{ needs.validate.outputs.version }}
+          path: packages/${{ matrix.package }}/dist/
+          retention-days: 1
+
+  publish-npm:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    needs: [validate, build-typescript]
+    if: needs.validate.outputs.should-publish-npm == 'true'
+    environment: npm-production
+    strategy:
+      matrix:
+        package: [encoder-cli, decoder-lib, validator-core]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: typescript-${{ matrix.package }}-${{ needs.validate.outputs.version }}
+          path: packages/${{ matrix.package }}/
+
+      - name: Publish to npm
+        run: |
+          cd packages/${{ matrix.package }}
+          
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "🧪 Dry run mode - would publish @clip-toolkit/${{ matrix.package }}@${{ needs.validate.outputs.version }}"
+            npm publish --dry-run
+          else
+            echo "📦 Publishing @clip-toolkit/${{ matrix.package }}@${{ needs.validate.outputs.version }} to npm..."
+            npm publish --access public
+            echo "✅ Successfully published to npm"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Verify publication
+        if: inputs.dry_run != 'true'
+        run: |
+          # Wait a bit for npm to propagate
+          sleep 30
+          
+          # Verify package is available
+          if npm view "@clip-toolkit/${{ matrix.package }}@${{ needs.validate.outputs.version }}" version; then
+            echo "✅ Package @clip-toolkit/${{ matrix.package }}@${{ needs.validate.outputs.version }} is available on npm"
+          else
+            echo "❌ Package verification failed"
+            exit 1
+          fi
+
+  publish-pypi:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    needs: [validate, build-python]
+    if: needs.validate.outputs.should-publish-pypi == 'true'
+    environment: pypi-production
+    strategy:
+      matrix:
+        package: [sdk-python, decoder-python]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install twine
+        run: |
+          python -m pip install --upgrade pip
+          pip install twine
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: python-${{ matrix.package }}-${{ needs.validate.outputs.version }}
+          path: packages/${{ matrix.package }}/dist/
+
+      - name: Publish to PyPI
+        run: |
+          cd packages/${{ matrix.package }}
+          
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "🧪 Dry run mode - would publish to PyPI"
+            twine check dist/*
+            echo "Package validation passed for PyPI upload"
+          else
+            echo "📦 Publishing to PyPI..."
+            twine upload dist/* --verbose
+            echo "✅ Successfully published to PyPI"
+          fi
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Verify publication
+        if: inputs.dry_run != 'true'
+        run: |
+          # Wait for PyPI to propagate
+          sleep 60
+          
+          # Determine package name for verification
+          if [ "${{ matrix.package }}" = "sdk-python" ]; then
+            PACKAGE_NAME="clip-sdk"
+          else
+            PACKAGE_NAME="clip-decoder"
+          fi
+          
+          # Verify package is available
+          if pip install --index-url https://pypi.org/simple/ --dry-run "${PACKAGE_NAME}==${{ needs.validate.outputs.version }}"; then
+            echo "✅ Package ${PACKAGE_NAME}@${{ needs.validate.outputs.version }} is available on PyPI"
+          else
+            echo "❌ Package verification failed"
+            exit 1
+          fi
+
+  create-github-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [validate, publish-npm, publish-pypi]
+    if: github.event_name == 'workflow_dispatch' && inputs.dry_run != 'true'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          VERSION="${{ needs.validate.outputs.version }}"
+          
+          # Get the previous tag
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          
+          if [ -n "$PREVIOUS_TAG" ]; then
+            echo "Generating changelog from $PREVIOUS_TAG to v$VERSION"
+            CHANGELOG=$(git log --oneline --no-merges $PREVIOUS_TAG..HEAD | sed 's/^/- /')
+          else
+            echo "No previous tag found, generating changelog from first commit"
+            CHANGELOG=$(git log --oneline --no-merges | sed 's/^/- /')
+          fi
+          
+          # Create changelog file
+          cat > CHANGELOG.md << EOF
+          # Release v$VERSION
+          
+          ## Changes
+          $CHANGELOG
+          
+          ## Packages Published
+          
+          ### TypeScript Packages (npm)
+          - @clip-toolkit/encoder-cli@$VERSION
+          - @clip-toolkit/decoder-lib@$VERSION
+          - @clip-toolkit/validator-core@$VERSION
+          
+          ### Python Packages (PyPI)
+          - clip-sdk@$VERSION
+          - clip-decoder@$VERSION
+          
+          ## Installation
+          
+          ### TypeScript/Node.js
+          \`\`\`bash
+          npm install @clip-toolkit/encoder-cli@$VERSION
+          npm install @clip-toolkit/decoder-lib@$VERSION
+          npm install @clip-toolkit/validator-core@$VERSION
+          \`\`\`
+          
+          ### Python
+          \`\`\`bash
+          pip install clip-sdk==$VERSION
+          pip install clip-decoder==$VERSION
+          \`\`\`
+          EOF
+          
+          echo "changelog_file=CHANGELOG.md" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ needs.validate.outputs.version }}
+          release_name: Release v${{ needs.validate.outputs.version }}
+          body_path: ${{ steps.changelog.outputs.changelog_file }}
+          draft: false
+          prerelease: ${{ contains(needs.validate.outputs.version, '-') }}
+
+  notify:
+    name: Notify Success
+    runs-on: ubuntu-latest
+    needs: [validate, publish-npm, publish-pypi]
+    if: always() && needs.validate.result == 'success'
+    steps:
+      - name: Determine status
+        id: status
+        run: |
+          NPM_STATUS="${{ needs.publish-npm.result || 'skipped' }}"
+          PYPI_STATUS="${{ needs.publish-pypi.result || 'skipped' }}"
+          
+          if [[ "$NPM_STATUS" == "failure" || "$PYPI_STATUS" == "failure" ]]; then
+            echo "status=failure" >> $GITHUB_OUTPUT
+            echo "message=❌ Some packages failed to publish" >> $GITHUB_OUTPUT
+          elif [[ "$NPM_STATUS" == "success" || "$PYPI_STATUS" == "success" ]]; then
+            echo "status=success" >> $GITHUB_OUTPUT
+            echo "message=✅ All packages published successfully" >> $GITHUB_OUTPUT
+          else
+            echo "status=skipped" >> $GITHUB_OUTPUT
+            echo "message=ℹ️ No packages were published" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Log results
+        run: |
+          echo "📊 Publish Results:"
+          echo "Version: ${{ needs.validate.outputs.version }}"
+          echo "npm packages: ${{ needs.publish-npm.result || 'skipped' }}"
+          echo "PyPI packages: ${{ needs.publish-pypi.result || 'skipped' }}"
+          echo "Status: ${{ steps.status.outputs.status }}"
+          echo "${{ steps.status.outputs.message }}"
+
+      - name: Comment on PR (if applicable)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🚀 **Publish Results**
+              
+              **Version:** ${{ needs.validate.outputs.version }}
+              **Status:** ${{ steps.status.outputs.message }}
+              
+              **npm packages:** ${{ needs.publish-npm.result || 'skipped' }}
+              **PyPI packages:** ${{ needs.publish-pypi.result || 'skipped' }}
+              
+              Published packages are available for installation!`
+            }) 
