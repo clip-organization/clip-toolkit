@@ -15,7 +15,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "removeComments": false
+    "removeComments": false,
+    "composite": true
   },
   "include": [
     "src/**/*"
@@ -24,5 +25,8 @@
     "node_modules",
     "dist",
     "**/*.test.ts"
+  ],
+  "references": [
+    { "path": "../validator-core" }
   ]
 } 

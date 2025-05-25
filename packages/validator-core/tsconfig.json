@@ -14,7 +14,9 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "removeComments": false,
+    "composite": true
   },
   "include": [
     "src/**/*"

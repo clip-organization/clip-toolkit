@@ -3,8 +3,6 @@
     "target": "ES2020",
     "module": "commonjs",
     "lib": ["ES2020", "DOM"],
-    "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -16,17 +14,13 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "removeComments": false,
-    "composite": true
+    "composite": true,
+    "incremental": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.test.ts"
-  ],
+  "files": [],
   "references": [
-    { "path": "../validator-core" }
+    { "path": "./packages/validator-core" },
+    { "path": "./packages/decoder-lib" },
+    { "path": "./packages/encoder-cli" }
   ]
 } 
