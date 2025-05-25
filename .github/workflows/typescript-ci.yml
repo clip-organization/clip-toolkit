@@ -184,8 +184,11 @@ jobs:
 
       - name: Build ${{ matrix.package }}
         run: |
-          cd packages/${{ matrix.package }}
+          # Build all packages with proper dependency order using TypeScript project references
           npm run build
+          # Verify the specific package was built
+          cd packages/${{ matrix.package }}
+          ls -la dist/ || echo "No dist directory found"
 
       - name: Check build artifacts
         run: |

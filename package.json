@@ -27,11 +27,11 @@
   },
   "homepage": "https://github.com/clip-organization/clip-toolkit#readme",
   "scripts": {
-    "build": "npm run build --workspaces",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
     "test": "npm run test --workspaces",
     "lint": "npm run lint --workspaces",
-    "clean": "npm run clean --workspaces",
-    "dev": "npm run dev --workspaces --if-present"
+    "dev": "tsc --build --watch"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
