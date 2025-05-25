@@ -1,0 +1,72 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clip-decoder"
+version = "0.1.0"
+description = "Python library for decoding visual CLIP representations (stub implementation)"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "CLIP Organization"}
+]
+keywords = [
+    "clip",
+    "decoder",
+    "qr-code",
+    "hexmatrix",
+    "visual-encoding",
+    "stub"
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Multimedia :: Graphics"
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/clip-organization/clip-toolkit"
+Repository = "https://github.com/clip-organization/clip-toolkit.git"
+Issues = "https://github.com/clip-organization/clip-toolkit/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["decoder_lib*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+line-length = 88
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"] 
