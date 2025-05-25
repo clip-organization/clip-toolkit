@@ -5,7 +5,6 @@ describe('CLIPValidator', () => {
 
   // Mock CLIP schema for testing
   const mockSchema = {
-    $schema: 'https://json-schema.org/draft/2020-12/schema',
     type: 'object',
     required: ['@context', 'type', 'id', 'name', 'description', 'lastUpdated'],
     properties: {

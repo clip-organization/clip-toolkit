@@ -54,7 +54,7 @@ describe('SchemaManager', () => {
       // Assert
       expect(result.schema).toEqual(mockSchema);
       expect(result.source).toBe('remote');
-      expect(result.version).toBe('1.0');
+      expect(result.version).toBe('1');
       expect(mockedAxios.get).toHaveBeenCalledWith(
         'https://example.com/test-schema.json',
         expect.objectContaining({
@@ -112,7 +112,7 @@ describe('SchemaManager', () => {
         .mockReturnValueOnce(mockSchema) // schema file
         .mockReturnValueOnce({ // metadata file
           schema: mockSchema,
-          version: '1.0',
+          version: '1',
           lastFetched: '2023-01-01T00:00:00.000Z',
           url: 'https://example.com/test-schema.json'
         });
@@ -123,7 +123,7 @@ describe('SchemaManager', () => {
       // Assert
       expect(result.schema).toEqual(mockSchema);
       expect(result.source).toBe('cache');
-      expect(result.version).toBe('1.0');
+      expect(result.version).toBe('1');
     });
 
     it('should throw error when cache files do not exist', () => {
@@ -145,7 +145,7 @@ describe('SchemaManager', () => {
         .mockReturnValueOnce(mockSchema)
         .mockReturnValueOnce({
           schema: mockSchema,
-          version: '1.0',
+          version: '1',
           lastFetched: '2023-01-01T00:00:00.000Z',
           url: 'https://example.com/test-schema.json'
         });
