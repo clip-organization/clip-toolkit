@@ -39,7 +39,7 @@ jobs:
           echo "key=pip-${{ hashFiles('**/requirements*.txt', '**/pyproject.toml', '**/setup.py') }}" >> $GITHUB_OUTPUT
 
       - name: Cache pip dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ steps.cache-key.outputs.key }}
@@ -65,7 +65,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Restore pip cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ needs.setup.outputs.cache-key }}
@@ -146,7 +146,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Restore pip cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ needs.setup.outputs.cache-key }}
@@ -205,7 +205,7 @@ jobs:
           python-version: '3.9'
 
       - name: Restore pip cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ needs.setup.outputs.cache-key }}
@@ -274,7 +274,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Restore pip cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ needs.setup.outputs.cache-key }}
