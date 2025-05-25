@@ -4,6 +4,7 @@ Tests for the CLIPFetcher class.
 
 import json
 import pytest
+import requests
 from unittest.mock import Mock, patch, mock_open
 from pathlib import Path
 
@@ -67,12 +68,15 @@ class TestCLIPFetcher:
     def test_fetch_from_url_retry(self, mock_get):
         """Test URL fetching with retries."""
         # First two calls fail, third succeeds
+        mock_response_success = Mock()
+        mock_response_success.json.return_value = {"@context": "https://clipprotocol.org/v1", "type": "Venue", "id": "clip:test:venue:123"}
+        mock_response_success.raise_for_status.return_value = None
+        
         mock_get.side_effect = [
-            Exception("Network error"),
-            Exception("Timeout"),
-            Mock(json=lambda: {"@context": "https://clipprotocol.org/v1", "type": "Venue", "id": "clip:test:venue:123"})
+            requests.RequestException("Network error"),
+            requests.RequestException("Timeout"),
+            mock_response_success
         ]
-        mock_get.return_value.raise_for_status.return_value = None
         
         fetcher = CLIPFetcher(max_retries=3)
         result = fetcher.fetch_from_url("https://example.com/clip.json")
@@ -83,7 +87,7 @@ class TestCLIPFetcher:
     @patch('clip_sdk.fetcher.requests.get')
     def test_fetch_from_url_all_retries_fail(self, mock_get):
         """Test URL fetching when all retries fail."""
-        mock_get.side_effect = Exception("Network error")
+        mock_get.side_effect = requests.RequestException("Network error")
         
         fetcher = CLIPFetcher(max_retries=2)
         
