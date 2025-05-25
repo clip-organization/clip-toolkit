@@ -1,7 +1,7 @@
 {
   "name": "@clip-toolkit/encoder-cli",
   "version": "0.1.0",
-  "description": "CLI tool for validating and generating CLIP JSON files",
+  "description": "Command-line tool for encoding, validating, and generating CLIP objects",
   "main": "dist/index.js",
   "bin": {
     "clip": "bin/clip"

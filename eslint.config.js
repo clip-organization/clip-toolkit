@@ -17,7 +17,7 @@ export default [
     },
     rules: {
       ...js.configs.recommended.rules,
-      'no-unused-vars': 'warn',
+      'no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
       'prefer-const': 'error',
       'no-console': 'off'
     }
@@ -43,7 +43,7 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
       '@typescript-eslint/no-explicit-any': 'off',
       'no-case-declarations': 'off',
       'no-prototype-builtins': 'off',
@@ -62,5 +62,30 @@ export default [
         ...globals.es2020
       }
     }
+  },
+
+  // Test files configuration
+  {
+    files: ['**/*.test.ts', '**/*.test.js', '**/tests/**'],
+    languageOptions: {
+      globals: {
+        ...globals.jest
+      }
+    },
+    rules: {
+      'no-console': 'off'
+    }
+  },
+
+  // Ignore patterns
+  {
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'coverage/**',
+      '*.min.js',
+      'packages/*/dist/**',
+      'packages/*/node_modules/**'
+    ]
   }
 ]; 
