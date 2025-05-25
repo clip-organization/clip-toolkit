@@ -1,0 +1,278 @@
+<context>
+# Overview  
+The CLIP Toolkit is an open-source collection of SDKs, validation tools, and command-line utilities for working with the Context Link Interface Protocol (CLIP). CLIP is a universal JSON standard that enables venues, devices, and services to expose structured, machine- and LLM-friendly context to AI agents and applications. 
+
+This toolkit empowers developers to easily generate, validate, consume, and (in future) visually encode/decode CLIP objects. By providing libraries and tools across multiple languages, we make it trivial for any developer to integrate CLIP into their applications, whether they're building AI agents, IoT systems, or venue management platforms.
+
+# Core Features  
+1. **Encoder CLI Tool** (Node.js/TypeScript)
+   - Validates CLIP JSON files against the official schema
+   - Generates compliant CLIP objects from templates
+   - Provides detailed validation reports (missing fields, invalid types, payload stats)
+   - Future capability: encode CLIP objects as visual glyphs/QR codes
+   - Command-line interface for easy integration into CI/CD pipelines
+
+2. **Python SDK**
+   - Full CLIP validation against JSON Schema
+   - Fetch and validate CLIP objects from URLs
+   - Helper functions to extract features, actions, and services
+   - Type-safe CLIP object manipulation
+   - Future: MCP (Model Context Protocol) aware fetching
+
+3. **Decoder Library** (Placeholder)
+   - Foundation for future visual CLIP decoding (HexMatrix, QR codes)
+   - Initial stub implementation in TypeScript and Python
+   - Will enable scanning and decoding of visual CLIP representations
+
+4. **Multi-language Support** (Future)
+   - Go SDK for high-performance server applications
+   - Rust SDK for embedded and IoT devices
+   - JavaScript/TypeScript browser library
+
+# User Experience  
+**Target Users:**
+- **AI/Agent Developers**: Need to consume and validate CLIP objects in their applications
+- **Venue/Device Operators**: Want to generate and validate their CLIP implementations
+- **Platform Developers**: Building systems that aggregate or serve CLIP objects
+- **IoT Engineers**: Implementing CLIP on resource-constrained devices
+
+**Key User Flows:**
+1. **Validation Flow**: Developer runs `clip validate my-clip.json` to ensure compliance
+2. **Generation Flow**: User runs `clip generate --type venue` to create a template
+3. **Integration Flow**: Python developer imports SDK and validates CLIP in their app
+4. **Fetch Flow**: Agent fetches and validates remote CLIP via SDK
+
+**UI/UX Considerations:**
+- Clear, helpful error messages with suggestions for fixes
+- Progress indicators for network operations
+- Colorized CLI output for better readability
+- Comprehensive documentation with examples
+</context>
+<PRD>
+# Technical Architecture  
+
+## Project Structure
+```
+clip-toolkit/
+├── packages/
+│   ├── encoder-cli/        # TypeScript CLI tool
+│   ├── decoder-lib/        # Visual decoding library (stub)
+│   ├── sdk-python/         # Python SDK
+│   └── (future: sdk-go/, sdk-rust/)
+├── examples/               # Usage examples for each package
+├── tests/                  # Comprehensive test suites
+├── docs/                   # Documentation
+└── .github/workflows/      # CI/CD pipelines
+```
+
+## Key Components
+
+### Encoder CLI (TypeScript/Node.js)
+- **Dependencies**: Commander.js (CLI), Ajv (JSON Schema validation), Axios (HTTP)
+- **Commands**:
+  - `clip validate <file>` - Validate a CLIP JSON file
+  - `clip generate --type <type>` - Generate CLIP template
+  - `clip stats <file>` - Show CLIP statistics
+  - `clip encode <file> --format qr` (future)
+- **Schema Management**: Fetch latest schema from spec repo or use cached version
+
+### Python SDK
+- **Core Classes**:
+  - `CLIPValidator` - Schema validation using jsonschema
+  - `CLIPFetcher` - HTTP client for remote CLIP objects
+  - `CLIPObject` - Type-safe wrapper with helper methods
+- **Key Methods**:
+  - `validate(clip_dict) -> ValidationResult`
+  - `fetch(url) -> CLIPObject`
+  - `get_features(clip) -> List[Feature]`
+  - `get_services(clip) -> List[Service]`
+
+### Decoder Library
+- **Initial Implementation**: Stub functions returning "Not implemented"
+- **Future API**:
+  - `decode_qr(image_data) -> CLIPObject`
+  - `decode_hexmatrix(hex_data) -> CLIPObject`
+  - `encode_visual(clip, format) -> VisualData`
+
+## Data Models
+- Strictly follow CLIP spec v1.0 schema
+- Type definitions for all CLIP object types (Venue, Device, SoftwareApp)
+- Validation against official JSON Schema Draft 2020-12
+
+## APIs and Integrations
+- HTTP client for fetching remote CLIP objects
+- Schema fetching from official spec repository
+- Future: MCP protocol integration
+- Future: Visual encoding libraries (QR, HexMatrix)
+
+## Infrastructure Requirements
+- Node.js 18+ for CLI tool
+- Python 3.8+ for Python SDK
+- GitHub Actions for CI/CD
+- npm/PyPI for package distribution
+
+# Development Roadmap  
+
+## Phase 1: Foundation (MVP)
+**Goal**: Basic validation and generation capabilities
+
+### Encoder CLI v0.1
+- [x] Project scaffolding with TypeScript
+- [ ] Schema validation using Ajv
+- [ ] Basic CLI commands (validate, generate)
+- [ ] Error reporting with helpful messages
+- [ ] Unit tests with example CLIP files
+
+### Python SDK v0.1
+- [ ] Package structure with setuptools
+- [ ] CLIPValidator with jsonschema
+- [ ] CLIPFetcher with requests/httpx
+- [ ] Basic helper methods
+- [ ] Comprehensive test suite
+
+### Documentation
+- [ ] README with quickstart guide
+- [ ] API documentation
+- [ ] Example implementations
+
+## Phase 2: Enhanced Features
+**Goal**: Production-ready tools with advanced capabilities
+
+### Encoder CLI v0.2
+- [ ] Remote CLIP validation (from URLs)
+- [ ] Batch validation support
+- [ ] Custom validation rules
+- [ ] Performance optimization for large files
+- [ ] Integration with CI/CD examples
+
+### Python SDK v0.2
+- [ ] Async support for fetching
+- [ ] Caching layer for remote CLIPs
+- [ ] Type hints and mypy compliance
+- [ ] Service endpoint helpers
+- [ ] Persona parsing utilities
+
+### Decoder Library v0.1
+- [ ] Basic structure in TypeScript and Python
+- [ ] API design documentation
+- [ ] Placeholder implementations
+
+## Phase 3: Visual Encoding
+**Goal**: Enable visual CLIP representations
+
+### Visual Encoding
+- [ ] QR code generation for CLIP URLs
+- [ ] HexMatrix encoding research
+- [ ] Decoder implementation for QR codes
+- [ ] Visual validation tools
+
+### Multi-language SDKs
+- [ ] Go SDK implementation
+- [ ] Rust SDK for embedded devices
+- [ ] Browser JavaScript library
+
+## Phase 4: Advanced Integration
+**Goal**: Full ecosystem integration
+
+### MCP Integration
+- [ ] MCP protocol support in SDKs
+- [ ] Live data streaming capabilities
+- [ ] Authentication helpers
+
+### Platform Features
+- [ ] CLIP registry/discovery service
+- [ ] Visual CLIP scanner mobile app
+- [ ] CLIP playground web interface
+
+# Logical Dependency Chain
+
+1. **Schema and Validation First**
+   - Must have robust validation before any other features
+   - Schema fetching and caching mechanism
+   - Error reporting framework
+
+2. **CLI Before SDKs**
+   - CLI provides immediate value and testing ground
+   - Validates architectural decisions
+   - Creates examples for SDK development
+
+3. **Python SDK as Reference Implementation**
+   - Most AI/ML developers use Python
+   - Sets patterns for other language SDKs
+   - Enables rapid prototyping
+
+4. **Documentation Alongside Development**
+   - Each feature needs examples
+   - API docs generated from code
+   - User guides for common scenarios
+
+5. **Visual Encoding After Core Stability**
+   - Requires stable data format
+   - Needs research on optimal encoding
+   - Benefits from established tooling
+
+# Risks and Mitigations  
+
+## Technical Risks
+
+### Schema Version Compatibility
+- **Risk**: CLIP spec changes breaking toolkit
+- **Mitigation**: Version pinning, deprecation warnings, backward compatibility layer
+
+### Cross-language Consistency
+- **Risk**: Different behavior across SDKs
+- **Mitigation**: Shared test suite, common validation logic, automated testing
+
+### Performance with Large CLIP Objects
+- **Risk**: Slow validation/processing
+- **Mitigation**: Streaming parsers, lazy loading, performance benchmarks
+
+## Adoption Risks
+
+### Developer Learning Curve
+- **Risk**: Complex API discourages adoption
+- **Mitigation**: Intuitive API design, comprehensive examples, video tutorials
+
+### Ecosystem Fragmentation
+- **Risk**: Multiple incompatible CLIP tools
+- **Mitigation**: Official toolkit status, community engagement, clear standards
+
+## Resource Risks
+
+### Maintenance Burden
+- **Risk**: Multiple languages/packages to maintain
+- **Mitigation**: Automated testing, community contributors, phased rollout
+
+### Scope Creep
+- **Risk**: Feature requests beyond core mission
+- **Mitigation**: Clear project charter, plugin architecture for extensions
+
+# Appendix  
+
+## Success Metrics
+- npm/PyPI download counts
+- GitHub stars and community engagement
+- Number of CLIP implementations using toolkit
+- Time to validate a CLIP (performance metric)
+- Error message helpfulness (user feedback)
+
+## Technical Specifications
+- JSON Schema Draft 2020-12 compliance
+- Node.js 18+ with TypeScript 5+
+- Python 3.8+ with type hints
+- 100ms validation time for typical CLIP
+- 95%+ test coverage target
+
+## Community Engagement
+- Monthly toolkit updates aligned with spec releases
+- Discord/Slack channel for developer support
+- Contribution guidelines and code of conduct
+- Regular blog posts about new features
+- Integration showcases and case studies
+
+## Related Projects
+- CLIP Specification Repository
+- CLIP Registry Service (future)
+- CLIP Playground (future)
+- Visual CLIP Scanner Apps (future)
+</PRD> 

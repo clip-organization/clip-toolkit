@@ -1,0 +1,47 @@
+{
+  "name": "clip-toolkit",
+  "version": "0.1.0",
+  "description": "Open-source tools and SDKs for working with CLIP (Context Link Interface Protocol)",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "keywords": [
+    "clip",
+    "context-link-interface-protocol",
+    "json-schema",
+    "validation",
+    "ai",
+    "llm",
+    "toolkit"
+  ],
+  "author": "CLIP Organization",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clip-organization/clip-toolkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/clip-organization/clip-toolkit/issues"
+  },
+  "homepage": "https://github.com/clip-organization/clip-toolkit#readme",
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "npm run clean --workspaces",
+    "dev": "npm run dev --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "prettier": "^3.0.0",
+    "eslint": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+} 
