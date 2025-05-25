@@ -3,7 +3,7 @@
 Core validation logic for CLIP (Context Link Interface Protocol) objects. This TypeScript library provides the foundational validation engine used across the CLIP Toolkit ecosystem.
 
 [![npm version](https://badge.fury.io/js/%40clip%2Fvalidator-core.svg)](https://badge.fury.io/js/%40clip%2Fvalidator-core)
-[![TypeScript CI](https://github.com/your-org/clip-toolkit/workflows/TypeScript%20CI/badge.svg)](https://github.com/your-org/clip-toolkit/actions)
+[![TypeScript CI](https://github.com/clip-organization/clip-toolkit/workflows/TypeScript%20CI/badge.svg)](https://github.com/clip-organization/clip-toolkit/actions)
 
 ## 🚀 Quick Start
 

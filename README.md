@@ -1,10 +1,12 @@
 # CLIP Toolkit
 
+![CLIP Logo](./public/images/clip.png)
+
 A comprehensive collection of SDKs, validation tools, and utilities for working with the Context Link Interface Protocol (CLIP). This monorepo provides TypeScript and Python implementations along with command-line tools for validating, generating, and working with CLIP objects.
 
-[![TypeScript CI](https://github.com/your-org/clip-toolkit/workflows/TypeScript%20CI/badge.svg)](https://github.com/your-org/clip-toolkit/actions)
-[![Python CI](https://github.com/your-org/clip-toolkit/workflows/Python%20CI/badge.svg)](https://github.com/your-org/clip-toolkit/actions)
-[![codecov](https://codecov.io/gh/your-org/clip-toolkit/branch/main/graph/badge.svg)](https://codecov.io/gh/your-org/clip-toolkit)
+[![TypeScript CI](https://github.com/clip-organization/clip-toolkit/workflows/TypeScript%20CI/badge.svg)](https://github.com/clip-organization/clip-toolkit/actions)
+[![Python CI](https://github.com/clip-organization/clip-toolkit/workflows/Python%20CI/badge.svg)](https://github.com/clip-organization/clip-toolkit/actions)
+[![codecov](https://codecov.io/gh/clip-organization/clip-toolkit/branch/main/graph/badge.svg)](https://codecov.io/gh/clip-organization/clip-toolkit)
 
 ## 🚀 Quick Start
 
@@ -76,7 +78,7 @@ This monorepo contains the following packages:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/clip-toolkit.git
+git clone https://github.com/clip-organization/clip-toolkit.git
 cd clip-toolkit
 
 # Install Node.js dependencies
@@ -251,8 +253,8 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 ## 🆘 Support
 
-- **Issues**: [GitHub Issues](https://github.com/your-org/clip-toolkit/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-org/clip-toolkit/discussions)
+- **Issues**: [GitHub Issues](https://github.com/clip-organization/clip-toolkit/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/clip-organization/clip-toolkit/discussions)
 - **Documentation**: [Full Documentation](./docs/README.md)
 
 ## 🏗️ Architecture

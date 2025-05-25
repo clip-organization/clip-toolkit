@@ -3,8 +3,8 @@
 A comprehensive Python library for working with CLIP (Context Link Interface Protocol) objects. Provides validation, fetching, manipulation, and analysis capabilities with full type safety and modern Python features.
 
 [![PyPI version](https://badge.fury.io/py/clip-sdk.svg)](https://badge.fury.io/py/clip-sdk)
-[![Python CI](https://github.com/your-org/clip-toolkit/workflows/Python%20CI/badge.svg)](https://github.com/your-org/clip-toolkit/actions)
-[![codecov](https://codecov.io/gh/your-org/clip-toolkit/branch/main/graph/badge.svg)](https://codecov.io/gh/your-org/clip-toolkit)
+[![Python CI](https://github.com/clip-organization/clip-toolkit/workflows/Python%20CI/badge.svg)](https://github.com/clip-organization/clip-toolkit/actions)
+[![codecov](https://codecov.io/gh/clip-organization/clip-toolkit/branch/main/graph/badge.svg)](https://codecov.io/gh/clip-organization/clip-toolkit)
 
 ## Features
 

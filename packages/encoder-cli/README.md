@@ -3,7 +3,7 @@
 A powerful command-line tool for validating, generating, and analyzing CLIP (Context Link Interface Protocol) objects. Built with TypeScript and designed for developers working with CLIP objects.
 
 [![npm version](https://badge.fury.io/js/%40clip%2Fencoder-cli.svg)](https://badge.fury.io/js/%40clip%2Fencoder-cli)
-[![Node.js CI](https://github.com/your-org/clip-toolkit/workflows/TypeScript%20CI/badge.svg)](https://github.com/your-org/clip-toolkit/actions)
+[![Node.js CI](https://github.com/clip-organization/clip-toolkit/workflows/TypeScript%20CI/badge.svg)](https://github.com/clip-organization/clip-toolkit/actions)
 
 ## 🚀 Quick Start
 

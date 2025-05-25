@@ -266,7 +266,7 @@ python -m pytest  # Instead of pytest
 
 ### Coverage Reports
 - Uploaded to Codecov automatically
-- View at: https://codecov.io/gh/your-org/clip-toolkit
+- View at: https://codecov.io/gh/clip-organization/clip-toolkit
 - Coverage targets: 80%+ for all packages
 
 ### Security Scanning

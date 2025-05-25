@@ -294,9 +294,9 @@ logging.basicConfig(level=logging.DEBUG)
 ### Getting Help
 
 1. **Check the FAQ**: [Frequently Asked Questions](./faq.md)
-2. **Search Issues**: [GitHub Issues](https://github.com/your-org/clip-toolkit/issues)
-3. **Community Discussion**: [GitHub Discussions](https://github.com/your-org/clip-toolkit/discussions)
-4. **Report Bug**: [New Issue](https://github.com/your-org/clip-toolkit/issues/new)
+2. **Search Issues**: [GitHub Issues](https://github.com/clip-organization/clip-toolkit/issues)
+3. **Community Discussion**: [GitHub Discussions](https://github.com/clip-organization/clip-toolkit/discussions)
+4. **Report Bug**: [New Issue](https://github.com/clip-organization/clip-toolkit/issues/new)
 
 ## 🔗 External Resources
 

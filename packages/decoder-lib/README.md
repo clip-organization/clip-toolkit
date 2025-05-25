@@ -3,7 +3,7 @@
 A TypeScript library for visual encoding and decoding of CLIP (Context Link Interface Protocol) objects. This package provides the foundation for converting CLIP data into visual formats like QR codes, DataMatrix codes, and the upcoming HexMatrix format.
 
 [![npm version](https://badge.fury.io/js/%40clip%2Fdecoder-lib.svg)](https://badge.fury.io/js/%40clip%2Fdecoder-lib)
-[![TypeScript CI](https://github.com/your-org/clip-toolkit/workflows/TypeScript%20CI/badge.svg)](https://github.com/your-org/clip-toolkit/actions)
+[![TypeScript CI](https://github.com/clip-organization/clip-toolkit/workflows/TypeScript%20CI/badge.svg)](https://github.com/clip-organization/clip-toolkit/actions)
 
 > **⚠️ Note**: This is currently a stub implementation providing interfaces and structure for future development. The visual encoding/decoding functionality is planned for future releases.
 

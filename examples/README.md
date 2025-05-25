@@ -27,7 +27,7 @@ npm install -g @clip/encoder-cli
 pip install clip-sdk
 
 # Clone repository for development examples
-git clone https://github.com/your-org/clip-toolkit.git
+git clone https://github.com/clip-organization/clip-toolkit.git
 cd clip-toolkit
 npm install
 ```

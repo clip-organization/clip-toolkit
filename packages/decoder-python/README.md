@@ -3,7 +3,7 @@
 A Python library for visual encoding and decoding of CLIP (Context Link Interface Protocol) objects. This package provides the foundation for converting CLIP data into visual formats like QR codes, DataMatrix codes, and the upcoming HexMatrix format.
 
 [![PyPI version](https://badge.fury.io/py/clip-decoder.svg)](https://badge.fury.io/py/clip-decoder)
-[![Python CI](https://github.com/your-org/clip-toolkit/workflows/Python%20CI/badge.svg)](https://github.com/your-org/clip-toolkit/actions)
+[![Python CI](https://github.com/clip-organization/clip-toolkit/workflows/Python%20CI/badge.svg)](https://github.com/clip-organization/clip-toolkit/actions)
 
 > **⚠️ Note**: This is currently a stub implementation providing interfaces and structure for future development. The visual encoding/decoding functionality is planned for future releases.
 

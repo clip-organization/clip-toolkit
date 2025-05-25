@@ -94,6 +94,13 @@ jobs:
 
       - name: Check TypeScript types for ${{ matrix.package }}
         run: |
+          # Build dependencies first for proper module resolution
+          if [ "${{ matrix.package }}" = "encoder-cli" ] || [ "${{ matrix.package }}" = "decoder-lib" ]; then
+            cd packages/validator-core
+            npm run build
+            cd ../..
+          fi
+          # Now check types for the target package
           cd packages/${{ matrix.package }}
           npx tsc --noEmit --skipLibCheck
         continue-on-error: false

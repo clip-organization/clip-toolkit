@@ -59,7 +59,7 @@ git clone https://github.com/YOUR_USERNAME/clip-toolkit.git
 cd clip-toolkit
 
 # 3. Add upstream remote
-git remote add upstream https://github.com/your-org/clip-toolkit.git
+git remote add upstream https://github.com/clip-organization/clip-toolkit.git
 
 # 4. Install Node.js dependencies
 npm install
