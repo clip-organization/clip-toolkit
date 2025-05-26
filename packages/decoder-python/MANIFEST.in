@@ -1,0 +1,5 @@
+include README.md
+include pyproject.toml
+recursive-include decoder_lib *.py
+recursive-exclude tests *
+recursive-exclude .pytest_cache * 

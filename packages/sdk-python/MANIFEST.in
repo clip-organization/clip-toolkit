@@ -1,0 +1,8 @@
+include README.md
+include pyproject.toml
+recursive-include clip_sdk *.py
+recursive-exclude tests *
+recursive-exclude examples *
+recursive-exclude .pytest_cache *
+recursive-exclude .benchmarks *
+recursive-exclude clip_sdk.egg-info * 

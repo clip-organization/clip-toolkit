@@ -7,7 +7,7 @@ name = "clip-decoder"
 version = "0.1.0"
 description = "Python library for decoding visual CLIP representations (stub implementation)"
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "CLIP Organization"}
 ]
@@ -52,6 +52,7 @@ Issues = "https://github.com/clip-organization/clip-toolkit/issues"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["decoder_lib*"]
+exclude = ["tests*"]
 
 [tool.black]
 line-length = 88
