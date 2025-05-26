@@ -2,7 +2,6 @@
 Tests for CLIP SDK caching functionality.
 """
 
-
 import tempfile
 import time
 from datetime import datetime, timedelta

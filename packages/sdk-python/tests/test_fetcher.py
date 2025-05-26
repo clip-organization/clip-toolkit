@@ -22,9 +22,7 @@ class TestCLIPFetcher:
 
     def test_init_custom(self):
         """Test fetcher initialization with custom parameters."""
-        fetcher = CLIPFetcher(
-            timeout=60.0, max_retries=5, cache_enabled=True
-        )
+        fetcher = CLIPFetcher(timeout=60.0, max_retries=5, cache_enabled=True)
         assert fetcher.timeout == 60.0
         assert fetcher.max_retries == 5
         assert fetcher.cache_enabled is True
@@ -60,9 +58,12 @@ class TestCLIPFetcher:
         assert result["type"] == "Venue"
         assert result["name"] == "Test Venue"
         mock_get.assert_called_once_with(
-            "https://example.com/clip.json", 
+            "https://example.com/clip.json",
             timeout=30.0,
-            headers={"Accept": "application/json", "User-Agent": "CLIP-SDK-Python/0.1.0"}
+            headers={
+                "Accept": "application/json",
+                "User-Agent": "CLIP-SDK-Python/0.1.0",
+            },
         )
 
     @patch("clip_sdk.fetcher.requests.get")

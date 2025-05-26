@@ -77,7 +77,7 @@ def main():
     invalid_clip = {
         "@context": "https://invalid-context.com/v1",
         "type": "InvalidType",
-        "name": "Missing required fields"
+        "name": "Missing required fields",
         # Missing id and description
     }
 

@@ -377,9 +377,9 @@ class CLIPCache:
         try:
             cache_data = {
                 "data": entry.data,
-                "expires_at": entry.expires_at.isoformat()
-                if entry.expires_at
-                else None,
+                "expires_at": (
+                    entry.expires_at.isoformat() if entry.expires_at else None
+                ),
                 "created_at": entry.created_at.isoformat(),
                 "access_count": entry.access_count,
                 "original_key": key,  # Store original key for pattern matching

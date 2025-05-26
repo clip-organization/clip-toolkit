@@ -90,7 +90,8 @@ class TestAsyncCLIPFetcher:
             # Check that there were 2 calls to the same URL (1 failure + 1 success)
             # In aioresponses, requests are keyed by (method, URL)
             from yarl import URL
-            request_key = ('GET', URL(url))
+
+            request_key = ("GET", URL(url))
             assert request_key in m.requests
             request_calls = m.requests[request_key]
             assert len(request_calls) == 2
@@ -305,7 +306,7 @@ class TestAsyncCLIPFetcher:
         # Test basic caching functionality
         assert cached_fetcher.cache_enabled is True
         assert cached_fetcher.cache is not None
-        
+
         # Test cache stats exist
         stats = cached_fetcher.get_cache_stats()
         assert stats is not None
@@ -357,7 +358,7 @@ class TestAsyncCLIPFetcher:
         """Test async URL prefetching."""
         # Test that prefetch returns proper structure
         results = await cached_fetcher.prefetch_urls([])
-        
+
         assert "successful" in results
         assert "failed" in results
         assert "cached" in results
@@ -402,11 +403,11 @@ class TestCLIPFetcherAsyncIntegration:
     async def test_shared_cache_between_sync_async(self, temp_clip_file):
         """Test that sync and async methods share the same cache."""
         fetcher = CLIPFetcher(cache_enabled=True)
-        
+
         # Test that the sync and async fetchers share the same cache instance
         assert fetcher.cache is not None
         assert fetcher._async_fetcher.cache is fetcher.cache
-        
+
         # Test cache clearing affects both
         fetcher.clear_cache()
         stats = fetcher.get_cache_stats()
