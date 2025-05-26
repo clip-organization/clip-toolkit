@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -25,6 +25,6 @@ setup(
         "jsonschema>=4.0.0",
         "requests>=2.25.0",
         "pydantic>=1.8.0",
-        "aiohttp>=3.7.0"
+        "aiohttp>=3.7.0",
     ],
-) 
+)

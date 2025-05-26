@@ -1,1 +1,1 @@
-# Tests for the CLIP Python SDK 
+# Tests for the CLIP Python SDK
