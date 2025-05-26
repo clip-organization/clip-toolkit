@@ -76,8 +76,8 @@ async function loadClipObject(file: string): Promise<any> {
   
   try {
     return JSON.parse(content);
-  } catch (_error) {
-    throw new Error(`Invalid JSON in file: ${file}`);
+  } catch (error) {
+    throw new Error(`Invalid JSON in file: ${file} - ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
