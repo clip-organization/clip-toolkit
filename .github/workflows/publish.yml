@@ -116,24 +116,7 @@ jobs:
           # Check PyPI for Python packages
           echo "Checking PyPI for existing versions..."
           pip install requests
-          python -c "
-          import requests
-          import sys
-          
-          packages = ['clip-sdk', 'clip-decoder']
-          version = '$VERSION'
-          
-          for package in packages:
-              try:
-                  response = requests.get(f'https://pypi.org/pypi/{package}/{version}/json')
-                  if response.status_code == 200:
-                      print(f'❌ Version {version} already exists for {package}')
-                      sys.exit(1)
-              except:
-                  pass  # Version doesn't exist, which is good
-          
-          print('✅ Version $VERSION is available for all packages')
-          "
+          python -c "import requests, sys; packages = ['clip-sdk', 'clip-decoder']; version = '$VERSION'; [print(f'❌ Version {version} already exists for {package}') or sys.exit(1) if requests.get(f'https://pypi.org/pypi/{package}/{version}/json').status_code == 200 else None for package in packages]; print('✅ Version $VERSION is available for all packages')"
 
   build-typescript:
     name: Build TypeScript Packages
@@ -209,24 +192,7 @@ jobs:
       - name: Update package version
         run: |
           cd packages/${{ matrix.package }}
-          python -c "
-          import toml
-          import sys
-          
-          try:
-              with open('pyproject.toml', 'r') as f:
-                  data = toml.load(f)
-              
-              data['project']['version'] = '${{ needs.validate.outputs.version }}'
-              
-              with open('pyproject.toml', 'w') as f:
-                  toml.dump(data, f)
-              
-              print('✅ Updated version to ${{ needs.validate.outputs.version }}')
-          except Exception as e:
-              print(f'❌ Failed to update version: {e}')
-              sys.exit(1)
-          "
+          python -c "import toml, sys; data = toml.load(open('pyproject.toml', 'r')); data.update({'project': {**data.get('project', {}), 'version': '${{ needs.validate.outputs.version }}'}}); toml.dump(data, open('pyproject.toml', 'w')); print('✅ Updated version to ${{ needs.validate.outputs.version }}')"
 
       - name: Install package dependencies
         run: |

@@ -347,42 +347,11 @@ jobs:
           
           # Test CLIP SDK functionality
           cd packages/sdk-python
-          python -c "
-          from clip_sdk import CLIPValidator, CLIPFetcher, CLIPObject
-          print('✅ All main classes imported successfully')
-          
-          # Test validator
-          validator = CLIPValidator()
-          print('✅ CLIPValidator created')
-          
-          # Test fetcher
-          fetcher = CLIPFetcher()
-          print('✅ CLIPFetcher created')
-          
-          # Test CLIP object
-          clip_data = {
-              '@context': 'https://clipprotocol.org/v1',
-              'type': 'Venue',
-              'id': 'clip:test:venue:123',
-              'name': 'Test Venue',
-              'description': 'Integration test venue'
-          }
-          clip_obj = CLIPObject(**clip_data)
-          print('✅ CLIPObject created:', clip_obj.name)
-          "
+          python -c "from clip_sdk import CLIPValidator, CLIPFetcher, CLIPObject; print('✅ All main classes imported successfully'); validator = CLIPValidator(); print('✅ CLIPValidator created'); fetcher = CLIPFetcher(); print('✅ CLIPFetcher created'); clip_data = {'@context': 'https://clipprotocol.org/v1', 'type': 'Venue', 'id': 'clip:test:venue:123', 'name': 'Test Venue', 'description': 'Integration test venue'}; clip_obj = CLIPObject(**clip_data); print('✅ CLIPObject created:', clip_obj.name)"
           
           # Test decoder library
           cd ../decoder-python
-          python -c "
-          from decoder_lib import DecodeOptions, EncodeOptions, get_library_info
-          print('✅ Decoder library imports successful')
-          
-          info = get_library_info()
-          print('✅ Library info:', info['name'], info['version'])
-          
-          options = DecodeOptions(format='qr')
-          print('✅ DecodeOptions created:', options.format)
-          "
+          python -c "from decoder_lib import DecodeOptions, EncodeOptions, get_library_info; print('✅ Decoder library imports successful'); info = get_library_info(); print('✅ Library info:', info['name'], info['version']); options = DecodeOptions(format='qr'); print('✅ DecodeOptions created:', options.format)"
 
   publish-check:
     name: Publish Readiness Check
@@ -417,13 +386,7 @@ jobs:
             twine check dist/*
             
             # Validate metadata
-            python -c "
-            import os, json
-            if os.path.exists('pyproject.toml'):
-                print('✅ pyproject.toml found')
-            else:
-                print('❌ pyproject.toml missing')
-            "
+            python -c "import os, json; print('✅ pyproject.toml found' if os.path.exists('pyproject.toml') else '❌ pyproject.toml missing')"
             
             cd ../..
           done
@@ -463,26 +426,7 @@ jobs:
       - name: Run performance tests
         run: |
           cd packages/sdk-python
-          python -c "
-          import time
-          from clip_sdk import CLIPValidator, CLIPObject
-          
-          # Simple performance test
-          start_time = time.time()
-          
-          for i in range(100):
-              clip_data = {
-                  '@context': 'https://clipprotocol.org/v1',
-                  'type': 'Venue',
-                  'id': f'clip:test:venue:{i}',
-                  'name': f'Test Venue {i}',
-                  'description': f'Performance test venue {i}'
-              }
-              clip_obj = CLIPObject(**clip_data)
-          
-          end_time = time.time()
-          print(f'✅ Created 100 CLIP objects in {end_time - start_time:.3f} seconds')
-          "
+          python -c "import time; from clip_sdk import CLIPValidator, CLIPObject; start_time = time.time(); [CLIPObject(**{'@context': 'https://clipprotocol.org/v1', 'type': 'Venue', 'id': f'clip:test:venue:{i}', 'name': f'Test Venue {i}', 'description': f'Performance test venue {i}'}) for i in range(100)]; end_time = time.time(); print(f'✅ Created 100 CLIP objects in {end_time - start_time:.3f} seconds')"
 
   summary:
     name: CI Summary
