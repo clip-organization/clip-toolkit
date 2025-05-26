@@ -1,0 +1,141 @@
+{
+  "@context": "https://clipprotocol.org/context/v1",
+  "type": "Device",
+  "id": "clip:example:device:smart-thermostat",
+  "name": "EcoSmart Thermostat Pro",
+  "description": "An intelligent thermostat with AI-powered energy optimization, remote control, and integration with smart home ecosystems.",
+  "lastUpdated": "2023-12-01T10:00:00Z",
+  "manufacturer": {
+    "name": "EcoTech Solutions",
+    "website": "https://ecotech.example.com",
+    "support": "support@ecotech.example.com"
+  },
+  "model": {
+    "number": "EST-Pro-2023",
+    "version": "2.1.4",
+    "releaseDate": "2023-06-15"
+  },
+  "features": [
+    {
+      "type": "TemperatureControl",
+      "name": "Precision Climate Control",
+      "description": "±0.5°F temperature accuracy with predictive heating/cooling",
+      "specifications": {
+        "accuracy": "±0.5°F",
+        "range": "45-95°F",
+        "sensors": ["temperature", "humidity", "occupancy"]
+      }
+    },
+    {
+      "type": "EnergyMonitoring",
+      "name": "Energy Usage Tracking",
+      "description": "Real-time energy consumption monitoring with cost analysis",
+      "capabilities": ["usage_tracking", "cost_estimation", "efficiency_tips"]
+    },
+    {
+      "type": "SmartScheduling",
+      "name": "AI Learning Scheduler",
+      "description": "Learns your patterns and automatically optimizes temperature schedules",
+      "features": ["occupancy_detection", "pattern_learning", "geofencing"]
+    },
+    {
+      "type": "Connectivity",
+      "name": "Multi-Protocol Support",
+      "description": "Works with major smart home platforms",
+      "protocols": ["WiFi", "Zigbee", "Thread", "Matter"]
+    }
+  ],
+  "services": [
+    {
+      "type": "RemoteControl",
+      "name": "Mobile App Control",
+      "description": "Control your thermostat from anywhere",
+      "endpoint": "https://api.ecotech.example.com/v1/devices",
+      "authentication": "oauth2"
+    },
+    {
+      "type": "DataSync",
+      "name": "Cloud Synchronization",
+      "description": "Sync settings and data across multiple devices",
+      "endpoint": "https://sync.ecotech.example.com/v1"
+    },
+    {
+      "type": "Analytics",
+      "name": "Energy Analytics",
+      "description": "Detailed energy usage reports and insights",
+      "endpoint": "https://analytics.ecotech.example.com/v1"
+    }
+  ],
+  "actions": [
+    {
+      "type": "SetTemperature",
+      "name": "Adjust Temperature",
+      "description": "Set target temperature",
+      "parameters": {
+        "temperature": {
+          "type": "number",
+          "min": 45,
+          "max": 95,
+          "unit": "fahrenheit"
+        }
+      },
+      "url": "https://api.ecotech.example.com/v1/thermostat/temperature"
+    },
+    {
+      "type": "SetMode",
+      "name": "Change Mode",
+      "description": "Switch between heating, cooling, or auto mode",
+      "parameters": {
+        "mode": {
+          "type": "string",
+          "enum": ["heat", "cool", "auto", "off"]
+        }
+      },
+      "url": "https://api.ecotech.example.com/v1/thermostat/mode"
+    },
+    {
+      "type": "GetStatus",
+      "name": "Device Status",
+      "description": "Get current device status and readings",
+      "url": "https://api.ecotech.example.com/v1/thermostat/status"
+    }
+  ],
+  "persona": {
+    "name": "EcoSmart Assistant",
+    "description": "I help you optimize your home's energy usage and maintain comfort",
+    "capabilities": [
+      "Temperature adjustment",
+      "Energy optimization recommendations",
+      "Schedule management",
+      "System diagnostics"
+    ]
+  },
+  "specifications": {
+    "dimensions": {
+      "width": "4.2 inches",
+      "height": "4.2 inches",
+      "depth": "1.1 inches"
+    },
+    "display": {
+      "type": "Color LCD",
+      "size": "3.5 inches",
+      "resolution": "480x320"
+    },
+    "power": {
+      "source": "24VAC",
+      "backup": "Lithium battery",
+      "consumption": "3.5W"
+    },
+    "connectivity": {
+      "wifi": "802.11 b/g/n/ac",
+      "bluetooth": "5.0",
+      "range": "150 feet"
+    }
+  },
+  "compatibility": {
+    "platforms": ["Apple HomeKit", "Google Assistant", "Amazon Alexa", "Samsung SmartThings"],
+    "hvacSystems": ["Gas", "Electric", "Heat Pump", "Dual Fuel"],
+    "wiring": ["2-wire", "3-wire", "4-wire", "5-wire"]
+  },
+  "certifications": ["Energy Star", "FCC", "UL Listed", "Matter Certified"]
+} 

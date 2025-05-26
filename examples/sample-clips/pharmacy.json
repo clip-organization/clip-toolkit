@@ -1,0 +1,395 @@
+{
+  "@context": "https://clipprotocol.org/context/v1",
+  "type": "Venue",
+  "id": "clip:example:venue:wellness-pharmacy",
+  "name": "WellCare Community Pharmacy & Health Center",
+  "description": "A full-service pharmacy offering prescription medications, over-the-counter products, health screenings, immunizations, and comprehensive medication management services.",
+  "lastUpdated": "2023-12-01T10:00:00Z",
+  "location": {
+    "latitude": 41.8781,
+    "longitude": -87.6298,
+    "address": "789 Health Street, Chicago, IL 60601",
+    "city": "Chicago",
+    "state": "Illinois",
+    "country": "United States",
+    "zipCode": "60601"
+  },
+  "contact": {
+    "phone": "+1-555-0789",
+    "fax": "+1-555-0790",
+    "email": "info@wellcarepharmacy.example.com",
+    "website": "https://wellcarepharmacy.example.com",
+    "emergencyPhone": "+1-555-0911"
+  },
+  "licenses": {
+    "pharmacyLicense": "IL-PHARM-2023-12345",
+    "deaNumber": "AB1234567",
+    "npiNumber": "1234567890",
+    "wholesaleLicense": "IL-WHL-2023-67890"
+  },
+  "features": [
+    {
+      "type": "PrescriptionServices",
+      "name": "Prescription Dispensing",
+      "description": "Full-service prescription filling and management",
+      "capabilities": [
+        "Electronic prescriptions (eRx)",
+        "Prescription transfers",
+        "Refill management",
+        "Prior authorization assistance",
+        "Insurance processing",
+        "90-day supplies",
+        "Specialty medications"
+      ],
+      "automationSystems": [
+        {
+          "name": "ScriptPro SP 200",
+          "type": "Robotic dispensing system",
+          "capacity": "200 drug cells",
+          "throughput": "150 prescriptions/hour"
+        },
+        {
+          "name": "Parata Max",
+          "type": "High-volume dispensing",
+          "capacity": "346 drug cells",
+          "throughput": "300 prescriptions/hour"
+        }
+      ]
+    },
+    {
+      "type": "MedicationInventory",
+      "name": "Comprehensive Drug Inventory",
+      "description": "Extensive inventory of prescription and OTC medications",
+      "inventory": {
+        "prescriptionMedications": {
+          "cardiovascular": {
+            "categories": ["ACE inhibitors", "beta blockers", "statins", "diuretics"],
+            "stockItems": 285,
+            "examples": [
+              {
+                "genericName": "lisinopril",
+                "brandName": "Prinivil",
+                "strength": "10mg",
+                "dosageForm": "tablet",
+                "ndc": "0093-1530-01",
+                "quantity": 5000,
+                "expirationDate": "2025-08-15"
+              },
+              {
+                "genericName": "atorvastatin",
+                "brandName": "Lipitor",
+                "strength": "20mg",
+                "dosageForm": "tablet",
+                "ndc": "0071-0155-23",
+                "quantity": 3000,
+                "expirationDate": "2025-12-01"
+              }
+            ]
+          },
+          "diabetes": {
+            "categories": ["insulin", "metformin", "sulfonylureas", "SGLT2 inhibitors"],
+            "stockItems": 156,
+            "examples": [
+              {
+                "genericName": "metformin",
+                "brandName": "Glucophage",
+                "strength": "500mg",
+                "dosageForm": "tablet",
+                "ndc": "0093-1074-01",
+                "quantity": 8000,
+                "expirationDate": "2025-09-30"
+              }
+            ]
+          },
+          "antibiotics": {
+            "categories": ["penicillins", "cephalosporins", "fluoroquinolones", "macrolides"],
+            "stockItems": 198,
+            "examples": [
+              {
+                "genericName": "amoxicillin",
+                "brandName": "Amoxil",
+                "strength": "500mg",
+                "dosageForm": "capsule",
+                "ndc": "0093-4155-01",
+                "quantity": 2500,
+                "expirationDate": "2025-06-20"
+              }
+            ]
+          },
+          "mentalHealth": {
+            "categories": ["antidepressants", "antipsychotics", "anxiolytics", "mood stabilizers"],
+            "stockItems": 167,
+            "controlledSubstances": true
+          },
+          "painManagement": {
+            "categories": ["NSAIDs", "opioids", "muscle relaxants", "topical analgesics"],
+            "stockItems": 89,
+            "controlledSubstances": true,
+            "specialSecurity": "DEA vault storage"
+          }
+        },
+        "otcMedications": {
+          "categories": [
+            "Pain relief", "Cold & flu", "Allergies", "Digestive health", 
+            "Vitamins & supplements", "First aid", "Baby care", "Skin care"
+          ],
+          "totalItems": 1200,
+          "brands": ["Tylenol", "Advil", "Claritin", "Pepto-Bismol", "Centrum", "Band-Aid"]
+        },
+        "medicalSupplies": {
+          "categories": ["Diabetic supplies", "Blood pressure monitors", "Thermometers", "First aid"],
+          "totalItems": 350
+        }
+      },
+      "inventoryManagement": {
+        "system": "McKesson Connect",
+        "features": ["Real-time tracking", "Automated ordering", "Expiration monitoring", "Temperature logging"],
+        "reorderPoints": "Automatically calculated based on usage patterns"
+      }
+    },
+    {
+      "type": "ClinicalServices",
+      "name": "Clinical Health Services",
+      "description": "Comprehensive health and wellness services",
+      "services": [
+        {
+          "name": "Immunizations",
+          "description": "Vaccinations for all ages",
+          "vaccines": [
+            "COVID-19", "Influenza", "Shingles", "Pneumonia", "Hepatitis A/B", 
+            "Tdap", "Meningitis", "HPV", "Travel vaccines"
+          ],
+          "pharmacistsLicensed": 4
+        },
+        {
+          "name": "Health Screenings",
+          "description": "Point-of-care testing and health assessments",
+          "screenings": [
+            "Blood pressure", "Cholesterol", "Blood glucose", "HbA1c", 
+            "BMI", "Strep throat", "UTI", "COVID-19 testing"
+          ],
+          "equipment": ["Cholestech LDX", "HemoCue Glucose 201+", "Abbott ID NOW"]
+        },
+        {
+          "name": "Medication Therapy Management",
+          "description": "Comprehensive medication reviews and optimization",
+          "services": [
+            "Annual comprehensive medication reviews",
+            "Drug interaction screening",
+            "Adherence counseling",
+            "Side effect management",
+            "Cost optimization"
+          ]
+        },
+        {
+          "name": "Compounding Services",
+          "description": "Custom medication preparation",
+          "capabilities": [
+            "Non-sterile compounding",
+            "Pediatric formulations",
+            "Topical preparations",
+            "Veterinary compounds",
+            "Hormone replacement therapy"
+          ],
+          "equipment": ["Unguator mixing system", "Electronic balance", "Capsule filling"]
+        }
+      ]
+    },
+    {
+      "type": "SpecialtyServices",
+      "name": "Specialty Pharmacy Services",
+      "description": "Specialized medication management for complex conditions",
+      "specialties": [
+        {
+          "area": "Oncology",
+          "medications": ["Oral chemotherapy", "Supportive care", "Biologics"],
+          "services": ["Patient education", "Side effect management", "Financial assistance"]
+        },
+        {
+          "area": "Rheumatology",
+          "medications": ["Biologics", "DMARDs", "Injectable medications"],
+          "services": ["Injection training", "Monitoring", "Prior authorization"]
+        },
+        {
+          "area": "HIV/AIDS",
+          "medications": ["Antiretrovirals", "PrEP", "PEP"],
+          "services": ["Adherence programs", "Lab monitoring", "Insurance navigation"]
+        }
+      ]
+    },
+    {
+      "type": "TechnologySystems",
+      "name": "Pharmacy Technology",
+      "description": "Advanced technology for safety and efficiency",
+      "systems": [
+        {
+          "name": "Epic Willow",
+          "type": "Pharmacy information system",
+          "features": ["EHR integration", "Clinical decision support", "Workflow management"]
+        },
+        {
+          "name": "BD Rowa",
+          "type": "Automated storage and retrieval",
+          "capacity": "40,000 packages",
+          "features": ["Temperature monitoring", "Expiration tracking", "Pick verification"]
+        },
+        {
+          "name": "Omnicell XT",
+          "type": "Automated dispensing cabinets",
+          "locations": "Patient care units",
+          "features": ["Biometric access", "Real-time inventory", "Waste tracking"]
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "type": "PrescriptionAPI",
+      "name": "Prescription Management API",
+      "description": "Electronic prescription processing and status tracking",
+      "endpoint": "https://api.wellcarepharmacy.example.com/v1/prescriptions",
+      "authentication": "OAuth 2.0 + FHIR",
+      "capabilities": ["Submit eRx", "Check status", "Request refills", "Transfer prescriptions"]
+    },
+    {
+      "type": "InventoryAPI",
+      "name": "Medication Inventory Service",
+      "description": "Real-time medication availability and pricing",
+      "endpoint": "https://api.wellcarepharmacy.example.com/v1/inventory",
+      "features": ["Drug lookup", "Availability check", "Price verification", "Generic alternatives"]
+    },
+    {
+      "type": "DeliveryService",
+      "name": "Prescription Delivery",
+      "description": "Free local delivery and mail order services",
+      "coverage": "15-mile radius",
+      "timeframes": ["Same day", "Next day", "Scheduled weekly"],
+      "tracking": "Real-time GPS tracking"
+    },
+    {
+      "type": "InsuranceProcessing",
+      "name": "Insurance Verification & Processing",
+      "description": "Comprehensive insurance claim processing",
+      "acceptedPlans": [
+        "Medicare Part D", "Medicaid", "Blue Cross Blue Shield", "Aetna", 
+        "UnitedHealthcare", "Cigna", "Humana", "Express Scripts"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "CheckPrescription",
+      "name": "Prescription Status Check",
+      "description": "Check the status of a prescription order",
+      "parameters": {
+        "prescriptionNumber": "string",
+        "patientInfo": "object"
+      },
+      "url": "https://api.wellcarepharmacy.example.com/v1/prescriptions/status"
+    },
+    {
+      "type": "RequestRefill",
+      "name": "Request Prescription Refill",
+      "description": "Submit a refill request for existing prescriptions",
+      "url": "https://api.wellcarepharmacy.example.com/v1/prescriptions/refill"
+    },
+    {
+      "type": "ScheduleConsultation",
+      "name": "Schedule Pharmacist Consultation",
+      "description": "Book appointment for medication review or health screening",
+      "url": "https://api.wellcarepharmacy.example.com/v1/appointments"
+    },
+    {
+      "type": "CheckDrugInteractions",
+      "name": "Drug Interaction Checker",
+      "description": "Screen for potential drug interactions",
+      "url": "https://api.wellcarepharmacy.example.com/v1/interactions"
+    },
+    {
+      "type": "PriceComparison",
+      "name": "Medication Price Lookup",
+      "description": "Compare prices and find discount programs",
+      "url": "https://api.wellcarepharmacy.example.com/v1/pricing"
+    }
+  ],
+  "persona": {
+    "name": "PharmBot Health Assistant",
+    "description": "I help manage your medications, answer drug questions, schedule health services, and provide medication education",
+    "capabilities": [
+      "Medication information and education",
+      "Drug interaction screening",
+      "Refill reminders and management",
+      "Health screening scheduling",
+      "Insurance benefit verification",
+      "Medication adherence support",
+      "Side effect monitoring",
+      "Immunization scheduling"
+    ]
+  },
+  "staff": {
+    "pharmacists": {
+      "total": 6,
+      "credentials": ["PharmD", "RPh"],
+      "specializations": ["Clinical pharmacy", "Oncology", "Diabetes education", "Immunizations"]
+    },
+    "technicians": {
+      "total": 12,
+      "certified": 10,
+      "specializations": ["IV preparation", "Compounding", "Automation systems"]
+    },
+    "supportStaff": {
+      "total": 8,
+      "roles": ["Customer service", "Insurance specialists", "Delivery drivers"]
+    }
+  },
+  "operatingHours": {
+    "monday": "7:00 AM - 10:00 PM",
+    "tuesday": "7:00 AM - 10:00 PM",
+    "wednesday": "7:00 AM - 10:00 PM",
+    "thursday": "7:00 AM - 10:00 PM",
+    "friday": "7:00 AM - 10:00 PM",
+    "saturday": "8:00 AM - 8:00 PM",
+    "sunday": "9:00 AM - 6:00 PM"
+  },
+  "emergencyServices": {
+    "afterHours": "Emergency prescription access via on-call pharmacist",
+    "emergencyPhone": "+1-555-0911",
+    "hospitalPartnership": "Rush University Medical Center"
+  },
+  "qualityAssurance": {
+    "accreditations": ["NABP", "ACHC", "URAC"],
+    "certifications": ["USP <797>", "USP <795>", "HIPAA compliant"],
+    "qualityPrograms": [
+      "Medication error prevention",
+      "Patient safety protocols",
+      "Continuous quality improvement",
+      "Medication reconciliation"
+    ]
+  },
+  "accessibility": {
+    "wheelchairAccessible": true,
+    "automaticDoors": true,
+    "lowCounters": true,
+    "brailleLabeling": "Available upon request",
+    "interpretationServices": "Available in 15+ languages"
+  },
+  "insurance": {
+    "acceptedPlans": 150,
+    "pharmacyBenefitManagers": ["Express Scripts", "CVS Caremark", "OptumRx", "Humana Pharmacy"],
+    "medicareProvider": true,
+    "medicaidProvider": true
+  },
+  "compliance": {
+    "regulations": ["FDA", "DEA", "State Board of Pharmacy", "HIPAA", "USP"],
+    "inspections": {
+      "lastStateInspection": "2023-09-15",
+      "lastDEAInspection": "2023-06-10",
+      "status": "Compliant"
+    },
+    "controlledSubstances": {
+      "vaultSecurity": "24/7 monitoring",
+      "inventoryTracking": "Perpetual inventory system",
+      "auditFrequency": "Monthly"
+    }
+  }
+} 

@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import { validateCommand } from './commands/validate';
 import { generateCommand } from './commands/generate';
 import { statsCommand } from './commands/stats';
+import { batchValidateCommand } from './commands/batch-validate';
 
 // Import version from package.json
 const packageJson = require('../package.json');
@@ -28,13 +29,15 @@ program
 // Validate command
 program
   .command('validate')
-  .description('Validate a CLIP JSON file against the schema')
+  .description('Validate a CLIP JSON file against the schema and custom rules')
   .argument('<file>', 'Path to CLIP JSON file or URL')
   .option('-s, --schema <file>', 'Custom schema file path')
   .option('-o, --output <format>', 'Output format (text, json)', 'text')
   .option('--strict', 'Enable strict validation mode')
   .option('--no-warnings', 'Suppress warnings')
   .option('--exit-code', 'Return non-zero exit code on validation failure')
+  .option('--no-custom-rules', 'Disable custom validation rules')
+  .option('-r, --rules-file <file>', 'Load additional custom rules from JSON file')
   .action(validateCommand);
 
 // Generate command
@@ -57,13 +60,35 @@ program
   .option('--detailed', 'Show detailed statistics')
   .action(statsCommand);
 
+// Batch validate command
+program
+  .command('batch-validate')
+  .description('Validate multiple CLIP files, directories, or URL patterns')
+  .argument('<sources...>', 'Paths to CLIP files, directories, URLs, or glob patterns')
+  .option('-s, --schema <file>', 'Custom schema file path')
+  .option('-o, --output <format>', 'Output format (text, json)', 'text')
+  .option('--strict', 'Enable strict validation mode')
+  .option('--no-warnings', 'Suppress warnings')
+  .option('--exit-code', 'Return non-zero exit code on validation failure')
+  .option('-q, --quiet', 'Suppress detailed progress output')
+  .option('--verbose', 'Show detailed error information')
+  .option('--continue-on-error', 'Continue processing even when errors occur')
+  .option('--no-custom-rules', 'Disable custom validation rules')
+  .option('-r, --rules-file <file>', 'Load additional custom rules from JSON file')
+  .action(async (sources: string[], options: any) => {
+    const exitCode = await batchValidateCommand(sources, options);
+    if (typeof exitCode === 'number' && exitCode !== 0) {
+      process.exit(exitCode);
+    }
+  });
+
 // Global error handler
 program.exitOverride((err) => {
   if (err.code === 'commander.version') {
     console.log(packageJson.version);
     process.exit(0);
   }
-  if (err.code === 'commander.help' || err.code === 'commander.helpDisplayed') {
+  if (err.code === 'commander.helpDisplayed') {
     // Help was displayed, exit cleanly
     process.exit(0);
   }

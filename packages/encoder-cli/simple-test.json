@@ -1,0 +1,7 @@
+{
+  "@context": "https://clipprotocol.org/context/v1",
+  "type": "Venue",
+  "id": "clip:test:venue:library",
+  "name": "City Public Library",
+  "description": "A modern library with excellent facilities"
+} 

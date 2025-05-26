@@ -1,0 +1,35 @@
+{
+  "@context": "https://invalid-context.example.com/context",
+  "id": "invalid-format-id",
+  "type": "Venue",
+  "name": "Short",
+  "description": "Too short",
+  "location": {
+    "latitude": 95,
+    "longitude": -200
+  },
+  "features": [
+    {
+      "id": "wifi",
+      "name": "WiFi"
+    },
+    {
+      "id": "wifi",
+      "name": "Another WiFi"
+    }
+  ],
+  "actions": [
+    {
+      "id": "action1",
+      "method": "INVALID_METHOD"
+    }
+  ],
+  "services": [
+    {
+      "id": "service1"
+    },
+    {
+      "id": "service1"
+    }
+  ]
+} 

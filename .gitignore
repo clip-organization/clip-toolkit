@@ -119,4 +119,7 @@ venv/
 ENV/
 
 # Example/template files (as requested)
-.env.example 
+.env.example
+
+# Added by Claude Task Master
+# Task files

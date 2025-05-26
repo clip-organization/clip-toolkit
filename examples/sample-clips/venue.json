@@ -1,0 +1,104 @@
+{
+  "@context": "https://clipprotocol.org/context/v1",
+  "type": "Venue",
+  "id": "clip:example:venue:coworking-space",
+  "name": "TechHub Coworking Space",
+  "description": "A modern coworking space with high-speed internet, meeting rooms, and collaborative areas for entrepreneurs and remote workers.",
+  "lastUpdated": "2023-12-01T10:00:00Z",
+  "location": {
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "address": "123 Innovation Drive, San Francisco, CA 94102",
+    "city": "San Francisco",
+    "country": "United States"
+  },
+  "contact": {
+    "phone": "+1-555-0123",
+    "email": "hello@techhub.example.com",
+    "website": "https://techhub.example.com"
+  },
+  "features": [
+    {
+      "type": "WiFi",
+      "name": "High-Speed Internet",
+      "description": "Gigabit fiber internet with backup connections",
+      "specifications": {
+        "speed": "1 Gbps",
+        "backup": true
+      }
+    },
+    {
+      "type": "Workspace",
+      "name": "Hot Desks",
+      "description": "Flexible workstations available on demand",
+      "capacity": 50
+    },
+    {
+      "type": "Workspace",
+      "name": "Private Offices",
+      "description": "Dedicated office spaces for teams",
+      "capacity": 8
+    },
+    {
+      "type": "MeetingRoom",
+      "name": "Conference Rooms",
+      "description": "Professional meeting spaces with AV equipment",
+      "capacity": 12
+    },
+    {
+      "type": "Amenity",
+      "name": "Coffee Bar",
+      "description": "Complimentary coffee and refreshments"
+    }
+  ],
+  "services": [
+    {
+      "type": "Booking",
+      "name": "Room Reservation",
+      "description": "Online booking system for meeting rooms",
+      "endpoint": "https://api.techhub.example.com/bookings"
+    },
+    {
+      "type": "Access",
+      "name": "24/7 Access",
+      "description": "Round-the-clock building access for members"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Book",
+      "name": "Reserve Workspace",
+      "description": "Book a hot desk or meeting room",
+      "url": "https://techhub.example.com/book"
+    },
+    {
+      "type": "Tour",
+      "name": "Schedule Tour",
+      "description": "Book a guided tour of the facility",
+      "url": "https://techhub.example.com/tour"
+    }
+  ],
+  "persona": {
+    "name": "TechHub Assistant",
+    "description": "I help visitors navigate our coworking space and book resources",
+    "capabilities": [
+      "Room booking assistance",
+      "Facility information",
+      "Event coordination"
+    ]
+  },
+  "operatingHours": {
+    "monday": "24/7",
+    "tuesday": "24/7",
+    "wednesday": "24/7",
+    "thursday": "24/7",
+    "friday": "24/7",
+    "saturday": "24/7",
+    "sunday": "24/7"
+  },
+  "accessibility": {
+    "wheelchairAccessible": true,
+    "elevatorAccess": true,
+    "accessibleParking": true
+  }
+} 

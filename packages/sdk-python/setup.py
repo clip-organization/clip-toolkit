@@ -24,6 +24,7 @@ setup(
     install_requires=[
         "jsonschema>=4.0.0",
         "requests>=2.25.0",
-        "pydantic>=1.8.0"
+        "pydantic>=1.8.0",
+        "aiohttp>=3.7.0"
     ],
 ) 

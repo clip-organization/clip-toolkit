@@ -1,0 +1,7 @@
+{
+  "@context": "https://clipprotocol.org/context/v1",
+  "type": "Device",
+  "id": "clip:test:device:sensor",
+  "name": "Temperature Sensor",
+  "description": "IoT temperature sensor"
+} 

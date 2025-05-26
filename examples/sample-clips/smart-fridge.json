@@ -1,0 +1,220 @@
+{
+  "@context": "https://clipprotocol.org/context/v1",
+  "type": "Device",
+  "id": "clip:example:device:smart-fridge-pro",
+  "name": "ChillMax Smart Refrigerator Pro",
+  "description": "An AI-powered smart refrigerator with inventory management, meal planning, energy optimization, and family hub features.",
+  "lastUpdated": "2023-12-01T10:00:00Z",
+  "manufacturer": {
+    "name": "ChillTech Appliances",
+    "website": "https://chilltech.example.com",
+    "support": "support@chilltech.example.com",
+    "warranty": "5 years parts and labor"
+  },
+  "model": {
+    "number": "CM-SF-Pro-2024",
+    "version": "3.2.1",
+    "releaseDate": "2024-01-15",
+    "series": "Pro Series"
+  },
+  "features": [
+    {
+      "type": "InventoryManagement",
+      "name": "Smart Inventory Tracking",
+      "description": "AI-powered food recognition and expiration tracking",
+      "specifications": {
+        "cameras": "6x internal HD cameras",
+        "recognition": "99.2% food identification accuracy",
+        "tracking": "Automatic expiration monitoring"
+      },
+      "capabilities": ["barcode_scanning", "visual_recognition", "expiration_alerts", "shopping_lists"]
+    },
+    {
+      "type": "TemperatureControl",
+      "name": "Precision Climate Zones",
+      "description": "Multi-zone temperature control with customizable settings",
+      "specifications": {
+        "zones": 4,
+        "range": "32-50°F",
+        "accuracy": "±0.5°F",
+        "sensors": "12x temperature/humidity sensors"
+      }
+    },
+    {
+      "type": "EnergyManagement",
+      "name": "Adaptive Energy Optimization",
+      "description": "Smart energy usage with peak-hour avoidance",
+      "capabilities": ["usage_monitoring", "smart_defrost", "eco_mode", "grid_integration"]
+    },
+    {
+      "type": "Display",
+      "name": "Family Hub Display",
+      "description": "32-inch touchscreen family communication center",
+      "specifications": {
+        "size": "32 inches",
+        "resolution": "4K UHD",
+        "type": "Capacitive touchscreen"
+      }
+    },
+    {
+      "type": "WaterFilter",
+      "name": "Advanced Water Filtration",
+      "description": "Multi-stage water purification system",
+      "specifications": {
+        "stages": 5,
+        "capacity": "200 gallons",
+        "certifications": ["NSF/ANSI 42", "NSF/ANSI 53"]
+      }
+    },
+    {
+      "type": "IceMaker",
+      "name": "Dual Ice System",
+      "description": "Cubed and nugget ice production",
+      "specifications": {
+        "types": ["cubed", "nugget", "crushed"],
+        "production": "10 lbs/day",
+        "storage": "4 lbs capacity"
+      }
+    }
+  ],
+  "services": [
+    {
+      "type": "InventoryAPI",
+      "name": "Food Inventory Service",
+      "description": "Access current food inventory and expiration data",
+      "endpoint": "https://api.chilltech.example.com/v1/inventory",
+      "authentication": "oauth2"
+    },
+    {
+      "type": "MealPlanning",
+      "name": "AI Meal Suggestions",
+      "description": "Personalized meal recommendations based on available ingredients",
+      "endpoint": "https://meal-ai.chilltech.example.com/v1/suggestions"
+    },
+    {
+      "type": "ShoppingList",
+      "name": "Smart Shopping Lists",
+      "description": "Automatic shopping list generation and grocery delivery integration",
+      "endpoint": "https://api.chilltech.example.com/v1/shopping"
+    },
+    {
+      "type": "Diagnostics",
+      "name": "Remote Diagnostics",
+      "description": "System health monitoring and predictive maintenance",
+      "endpoint": "https://diagnostics.chilltech.example.com/v1"
+    }
+  ],
+  "actions": [
+    {
+      "type": "SetTemperature",
+      "name": "Adjust Zone Temperature",
+      "description": "Set temperature for specific refrigerator zones",
+      "parameters": {
+        "zone": {
+          "type": "string",
+          "enum": ["main", "deli", "crisper", "freezer"]
+        },
+        "temperature": {
+          "type": "number",
+          "min": 32,
+          "max": 50,
+          "unit": "fahrenheit"
+        }
+      },
+      "url": "https://api.chilltech.example.com/v1/temperature"
+    },
+    {
+      "type": "GetInventory",
+      "name": "Check Food Inventory",
+      "description": "Get current food items and expiration dates",
+      "url": "https://api.chilltech.example.com/v1/inventory/status"
+    },
+    {
+      "type": "OrderFilters",
+      "name": "Order Replacement Filters",
+      "description": "Automatically order water filter replacements",
+      "url": "https://store.chilltech.example.com/filters/order"
+    },
+    {
+      "type": "CreateShoppingList",
+      "name": "Generate Shopping List",
+      "description": "Create shopping list based on low/expired items",
+      "url": "https://api.chilltech.example.com/v1/shopping/generate"
+    }
+  ],
+  "persona": {
+    "name": "ChefBot Assistant",
+    "description": "I help manage your kitchen, track food freshness, suggest recipes, and optimize energy usage",
+    "capabilities": [
+      "Food inventory management",
+      "Recipe recommendations",
+      "Expiration notifications",
+      "Energy optimization",
+      "Family calendar integration",
+      "Shopping list creation"
+    ]
+  },
+  "specifications": {
+    "dimensions": {
+      "width": "35.75 inches",
+      "height": "69.75 inches",
+      "depth": "28.75 inches",
+      "weight": "315 lbs"
+    },
+    "capacity": {
+      "total": "28 cubic feet",
+      "refrigerator": "19.4 cubic feet",
+      "freezer": "8.6 cubic feet"
+    },
+    "power": {
+      "voltage": "115V",
+      "frequency": "60Hz",
+      "consumption": "450 kWh/year",
+      "energyStar": true
+    },
+    "connectivity": {
+      "wifi": "802.11 a/b/g/n/ac",
+      "bluetooth": "5.0",
+      "ethernet": "Gigabit",
+      "zigbee": "3.0"
+    }
+  },
+  "sensors": [
+    {
+      "type": "temperature",
+      "count": 12,
+      "accuracy": "±0.5°F"
+    },
+    {
+      "type": "humidity",
+      "count": 6,
+      "accuracy": "±3%"
+    },
+    {
+      "type": "door",
+      "count": 4,
+      "description": "Magnetic door sensors"
+    },
+    {
+      "type": "camera",
+      "count": 6,
+      "resolution": "1080p"
+    },
+    {
+      "type": "load",
+      "count": 8,
+      "description": "Weight sensors for shelf monitoring"
+    }
+  ],
+  "compatibility": {
+    "platforms": ["SmartThings", "Google Home", "Alexa", "Apple HomeKit"],
+    "groceryServices": ["Amazon Fresh", "Instacart", "Walmart Grocery"],
+    "mealPlanners": ["Yummly", "Allrecipes", "BigOven"]
+  },
+  "certifications": ["Energy Star", "UL Listed", "FCC", "FDA Food Contact Safe"],
+  "maintenance": {
+    "filterReplacement": "Every 6 months",
+    "defrostCycle": "Automatic",
+    "cleaningCycle": "Self-cleaning condenser coils"
+  }
+} 

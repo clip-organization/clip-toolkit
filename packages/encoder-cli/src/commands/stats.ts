@@ -1,23 +1,28 @@
-import * as fs from 'fs';
+import * as fs from 'fs/promises';
 import * as path from 'path';
 import chalk from 'chalk';
 import ora from 'ora';
+import axios from 'axios';
 import { CLIPToolkit } from '@clip-toolkit/validator-core';
+import { isURL, formatBytes, getCompletenessColor } from '../utils';
 
 interface StatsOptions {
   output: 'text' | 'json';
   detailed?: boolean;
 }
 
-export async function statsCommand(file: string, options: StatsOptions) {
+export async function statsCommand(source: string, options: StatsOptions) {
   const spinner = ora('Loading CLIP object...').start();
   
   try {
     // Initialize toolkit
     const toolkit = new CLIPToolkit();
 
+    // Update spinner text based on source type
+    spinner.text = isURL(source) ? 'Fetching CLIP object from URL...' : 'Loading CLIP object from file...';
+
     // Load CLIP object
-    const clipObject = await loadClipObject(file);
+    const clipObject = await loadClipObject(source);
     
     spinner.text = 'Analyzing CLIP object...';
 
@@ -34,11 +39,12 @@ export async function statsCommand(file: string, options: StatsOptions) {
       console.log(JSON.stringify({
         ...result.stats,
         ...analysis,
-        file: file
+        source: source,
+        sourceType: isURL(source) ? 'url' : 'file'
       }, null, 2));
     } else {
       // Text output
-      printStatsOutput(result.stats, analysis, options, file);
+      printStatsOutput(result.stats, analysis, options, source);
     }
 
   } catch (error) {
@@ -47,7 +53,8 @@ export async function statsCommand(file: string, options: StatsOptions) {
     if (options.output === 'json') {
       console.log(JSON.stringify({
         error: error instanceof Error ? error.message : String(error),
-        file: file
+        source: source,
+        sourceType: isURL(source) ? 'url' : 'file'
       }, null, 2));
     } else {
       console.error(chalk.red('✗ Stats analysis failed:'), error instanceof Error ? error.message : String(error));
@@ -57,27 +64,58 @@ export async function statsCommand(file: string, options: StatsOptions) {
   }
 }
 
-async function loadClipObject(file: string): Promise<any> {
-  // Check if it's a URL
-  if (file.startsWith('http://') || file.startsWith('https://')) {
-    const axios = await import('axios');
-    const response = await axios.default.get(file);
-    return response.data;
-  }
-  
-  // Load from file
-  const filePath = path.resolve(file);
-  
-  if (!fs.existsSync(filePath)) {
-    throw new Error(`File not found: ${filePath}`);
-  }
-  
-  const content = fs.readFileSync(filePath, 'utf8');
-  
-  try {
-    return JSON.parse(content);
-  } catch (error) {
-    throw new Error(`Invalid JSON in file: ${file} - ${error instanceof Error ? error.message : String(error)}`);
+async function loadClipObject(source: string): Promise<any> {
+  if (isURL(source)) {
+    try {
+      const response = await axios.get(source, {
+        headers: {
+          'Accept': 'application/json',
+          'User-Agent': 'CLIP-Toolkit/1.0'
+        },
+        timeout: 30000, // 30 second timeout
+        maxRedirects: 5
+      });
+      
+      // Validate that we received JSON
+      if (response.headers['content-type'] && 
+          !response.headers['content-type'].includes('application/json')) {
+        console.warn(chalk.yellow('⚠️  Warning: Response content-type is not application/json'));
+      }
+      
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          throw new Error(`HTTP error ${error.response.status}: ${error.response.statusText} when fetching ${source}`);
+        } else if (error.request) {
+          throw new Error(`Network error: No response received from ${source}`);
+        } else if (error.code === 'ECONNABORTED') {
+          throw new Error(`Request timeout when fetching ${source}`);
+        }
+      }
+      throw new Error(`Failed to fetch CLIP object from ${source}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  } else {
+    // Load from file
+    try {
+      const filePath = path.resolve(source);
+      const content = await fs.readFile(filePath, 'utf-8');
+      
+      try {
+        return JSON.parse(content);
+      } catch (parseError) {
+        throw new Error(`Invalid JSON in file: ${source} - ${parseError instanceof Error ? parseError.message : String(parseError)}`);
+      }
+    } catch (error: any) {
+      if (error.code === 'ENOENT') {
+        throw new Error(`File not found: ${source}`);
+      } else if (error.code === 'EACCES') {
+        throw new Error(`Permission denied reading file: ${source}`);
+      } else if (error.code === 'EISDIR') {
+        throw new Error(`Path is a directory, not a file: ${source}`);
+      }
+      throw new Error(`Failed to read file ${source}: ${error.message}`);
+    }
   }
 }
 
@@ -125,12 +163,13 @@ function generateDetailedAnalysis(clipObject: any, stats: any): any {
   return analysis;
 }
 
-function printStatsOutput(stats: any, analysis: any, options: StatsOptions, file: string) {
+function printStatsOutput(stats: any, analysis: any, options: StatsOptions, source: string) {
   // Header
   console.log(chalk.blue('CLIP Object Statistics'));
   console.log(chalk.gray('═'.repeat(50)));
-  console.log(`File: ${chalk.cyan(file)}`);
-  console.log(`Type: ${chalk.cyan(stats.type)}`);
+  console.log(`Source: ${chalk.cyan(source)}`);
+  console.log(`Type: ${isURL(source) ? chalk.magenta('URL') : chalk.blue('File')}`);
+  console.log(`CLIP Type: ${chalk.cyan(stats.type)}`);
   console.log();
 
   // Basic Stats
@@ -328,18 +367,4 @@ function analyzeServices(services: any[]): any {
     byType[type] = (byType[type] || 0) + 1;
   });
   return { byType, total: services.length };
-}
-
-function getCompletenessColor(completeness: number): typeof chalk.green {
-  if (completeness >= 90) return chalk.green;
-  if (completeness >= 70) return chalk.yellow;
-  return chalk.red;
-}
-
-function formatBytes(bytes: number): string {
-  if (bytes === 0) return '0 B';
-  const k = 1024;
-  const sizes = ['B', 'KB', 'MB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 } 

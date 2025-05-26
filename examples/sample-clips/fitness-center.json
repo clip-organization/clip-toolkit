@@ -1,0 +1,382 @@
+{
+  "@context": "https://clipprotocol.org/context/v1",
+  "type": "Venue",
+  "id": "clip:example:venue:elite-fitness-center",
+  "name": "Elite Fitness Center & Wellness Complex",
+  "description": "A state-of-the-art fitness facility featuring premium equipment, personal training, group classes, spa services, and advanced health monitoring technology.",
+  "lastUpdated": "2023-12-01T10:00:00Z",
+  "location": {
+    "latitude": 40.7128,
+    "longitude": -74.0060,
+    "address": "456 Wellness Boulevard, New York, NY 10001",
+    "city": "New York",
+    "country": "United States",
+    "floor": "Floors 1-3",
+    "parking": "500 spaces available"
+  },
+  "contact": {
+    "phone": "+1-555-0456",
+    "email": "info@elitefitness.example.com",
+    "website": "https://elitefitness.example.com",
+    "emergencyPhone": "+1-555-0911"
+  },
+  "features": [
+    {
+      "type": "CardioEquipment",
+      "name": "Cardio Zone",
+      "description": "Latest cardio equipment with entertainment systems",
+      "inventory": [
+        {
+          "equipment": "Treadmills",
+          "brand": "TechnoGym",
+          "model": "MyRun",
+          "count": 25,
+          "features": ["15-inch touchscreen", "virtual coaching", "heart rate monitoring"]
+        },
+        {
+          "equipment": "Elliptical Trainers",
+          "brand": "Precor",
+          "model": "EFX 885",
+          "count": 20,
+          "features": ["CrossRamp technology", "SmartRate", "P80 console"]
+        },
+        {
+          "equipment": "Stationary Bikes",
+          "brand": "Peloton",
+          "model": "Bike+",
+          "count": 30,
+          "features": ["22-inch rotating screen", "live classes", "auto-resistance"]
+        },
+        {
+          "equipment": "Rowing Machines",
+          "brand": "Concept2",
+          "model": "Model D",
+          "count": 12,
+          "features": ["PM5 monitor", "flywheel design", "smartphone connectivity"]
+        },
+        {
+          "equipment": "StairMasters",
+          "brand": "StairMaster",
+          "model": "SM5",
+          "count": 8,
+          "features": ["10-inch touchscreen", "landmark challenges", "heart rate monitoring"]
+        }
+      ],
+      "totalUnits": 95
+    },
+    {
+      "type": "StrengthEquipment",
+      "name": "Strength Training Zone",
+      "description": "Comprehensive strength training equipment for all muscle groups",
+      "inventory": [
+        {
+          "equipment": "Cable Machines",
+          "brand": "Life Fitness",
+          "model": "Signature Series",
+          "count": 15,
+          "exercises": ["lat pulldown", "seated row", "tricep extension", "cable fly"]
+        },
+        {
+          "equipment": "Smith Machines",
+          "brand": "Hammer Strength",
+          "model": "HD Elite",
+          "count": 4,
+          "features": ["counter-balanced bar", "safety stops", "plate storage"]
+        },
+        {
+          "equipment": "Power Racks",
+          "brand": "Rogue Fitness",
+          "model": "R-6",
+          "count": 8,
+          "features": ["pull-up bars", "safety bars", "plate storage", "band pegs"]
+        },
+        {
+          "equipment": "Bench Press Stations",
+          "brand": "Hammer Strength",
+          "model": "Olympic Bench",
+          "count": 6,
+          "features": ["adjustable", "Olympic bar included", "safety spotters"]
+        },
+        {
+          "equipment": "Leg Press Machines",
+          "brand": "TechnoGym",
+          "model": "Selection Line",
+          "count": 4,
+          "features": ["plate-loaded", "45-degree angle", "safety handles"]
+        }
+      ],
+      "freeWeights": {
+        "dumbbells": "5-150 lbs (5 lb increments)",
+        "barbells": "Olympic bars: 8 units, EZ-curl bars: 6 units",
+        "kettlebells": "15-80 lbs (various weights)",
+        "plates": "Olympic plates: 2.5-45 lbs, bumper plates available"
+      },
+      "totalStations": 37
+    },
+    {
+      "type": "FunctionalTraining",
+      "name": "Functional Fitness Area",
+      "description": "Open space for functional movement and athletic training",
+      "equipment": [
+        {
+          "type": "TRX Suspension Systems",
+          "count": 20,
+          "mounting": "ceiling mounted"
+        },
+        {
+          "type": "Battle Ropes",
+          "count": 6,
+          "specifications": "2-inch diameter, 50 feet long"
+        },
+        {
+          "type": "Plyometric Boxes",
+          "count": 15,
+          "heights": ["12 inch", "18 inch", "24 inch", "30 inch"]
+        },
+        {
+          "type": "Medicine Balls",
+          "count": 25,
+          "weights": "6-30 lbs"
+        },
+        {
+          "type": "Resistance Bands",
+          "count": 50,
+          "types": ["loop bands", "tube bands", "flat bands"]
+        },
+        {
+          "type": "Agility Equipment",
+          "items": ["speed ladders", "cones", "hurdles", "agility dots"]
+        }
+      ],
+      "floorSpace": "2000 sq ft",
+      "flooring": "Rubber matting with shock absorption"
+    },
+    {
+      "type": "GroupFitnessStudios",
+      "name": "Group Exercise Studios",
+      "description": "Multiple studios for various group fitness programs",
+      "studios": [
+        {
+          "name": "Main Studio",
+          "size": "1500 sq ft",
+          "capacity": 40,
+          "equipment": ["mirrors", "sound system", "microphones", "yoga mats", "blocks", "straps"]
+        },
+        {
+          "name": "Cycling Studio",
+          "size": "800 sq ft",
+          "capacity": 25,
+          "equipment": ["Peloton bikes", "premium sound", "LED lighting", "climate control"]
+        },
+        {
+          "name": "Hot Yoga Studio",
+          "size": "600 sq ft",
+          "capacity": 20,
+          "equipment": ["heated floors", "humidity control", "cork flooring", "props storage"]
+        }
+      ]
+    },
+    {
+      "type": "Aquatics",
+      "name": "Aquatic Center",
+      "description": "Swimming and water-based fitness facilities",
+      "facilities": [
+        {
+          "type": "Lap Pool",
+          "lanes": 8,
+          "length": "25 yards",
+          "features": ["starting blocks", "lane ropes", "pace clocks"]
+        },
+        {
+          "type": "Therapy Pool",
+          "temperature": "92-94°F",
+          "depth": "3.5-4 feet",
+          "features": ["jets", "resistance current", "underwater treadmill"]
+        },
+        {
+          "type": "Hot Tub",
+          "capacity": 12,
+          "temperature": "102-104°F"
+        },
+        {
+          "type": "Sauna",
+          "type_detail": "Dry sauna",
+          "capacity": 8,
+          "temperature": "180-190°F"
+        }
+      ]
+    },
+    {
+      "type": "RecoveryCenter",
+      "name": "Recovery & Wellness Center",
+      "description": "Advanced recovery and rehabilitation equipment",
+      "equipment": [
+        {
+          "type": "Cryotherapy Chamber",
+          "count": 1,
+          "temperature": "-200°F to -250°F",
+          "capacity": 1
+        },
+        {
+          "type": "Infrared Saunas",
+          "count": 2,
+          "capacity": 4,
+          "features": ["chromotherapy", "bluetooth audio"]
+        },
+        {
+          "type": "Compression Therapy",
+          "brand": "NormaTec",
+          "units": 4,
+          "types": ["legs", "arms", "hips"]
+        },
+        {
+          "type": "Massage Chairs",
+          "brand": "Human Touch",
+          "count": 6,
+          "features": ["zero gravity", "heat therapy", "multiple programs"]
+        }
+      ]
+    },
+    {
+      "type": "TechnologyIntegration",
+      "name": "Fitness Technology",
+      "description": "Advanced technology for tracking and optimization",
+      "features": [
+        "Heart rate monitoring zones throughout facility",
+        "Mobile app integration",
+        "Wearable device sync",
+        "Virtual personal training",
+        "AI-powered workout recommendations",
+        "Body composition analysis (InBody scanners)"
+      ]
+    }
+  ],
+  "services": [
+    {
+      "type": "PersonalTraining",
+      "name": "Personal Training Services",
+      "description": "Certified personal trainers for one-on-one sessions",
+      "trainers": 25,
+      "specializations": ["weight loss", "strength training", "rehabilitation", "sports performance"],
+      "pricing": "$80-150 per session"
+    },
+    {
+      "type": "GroupClasses",
+      "name": "Group Fitness Classes",
+      "description": "Variety of instructor-led group fitness programs",
+      "classes": [
+        "Yoga", "Pilates", "Zumba", "CrossFit", "HIIT", "Spinning", "Aqua Aerobics", "Boxing", "Barre"
+      ],
+      "schedule": "60+ classes per week"
+    },
+    {
+      "type": "NutritionCounseling",
+      "name": "Nutrition & Wellness Coaching",
+      "description": "Registered dietitians and wellness coaches",
+      "services": ["meal planning", "body composition analysis", "metabolic testing", "supplement guidance"]
+    },
+    {
+      "type": "PhysicalTherapy",
+      "name": "Physical Therapy & Rehabilitation",
+      "description": "Licensed physical therapists and sports medicine",
+      "services": ["injury rehabilitation", "movement screening", "corrective exercise", "sports massage"]
+    }
+  ],
+  "actions": [
+    {
+      "type": "BookClass",
+      "name": "Reserve Group Class",
+      "description": "Book a spot in group fitness classes",
+      "url": "https://api.elitefitness.example.com/bookings/classes"
+    },
+    {
+      "type": "ScheduleTraining",
+      "name": "Schedule Personal Training",
+      "description": "Book personal training sessions",
+      "url": "https://api.elitefitness.example.com/bookings/training"
+    },
+    {
+      "type": "CheckEquipment",
+      "name": "Equipment Availability",
+      "description": "Check real-time equipment availability",
+      "url": "https://api.elitefitness.example.com/equipment/status"
+    },
+    {
+      "type": "AccessControl",
+      "name": "Facility Access",
+      "description": "Keyless entry using mobile app or fitness tracker",
+      "url": "https://access.elitefitness.example.com/entry"
+    }
+  ],
+  "persona": {
+    "name": "FitBot Wellness Assistant",
+    "description": "I help optimize your fitness journey with personalized recommendations, equipment guidance, and wellness support",
+    "capabilities": [
+      "Workout planning and tracking",
+      "Equipment tutorials and safety tips",
+      "Class recommendations",
+      "Nutrition guidance",
+      "Recovery optimization",
+      "Goal setting and progress tracking"
+    ]
+  },
+  "membership": {
+    "types": [
+      {
+        "name": "Basic",
+        "price": "$49/month",
+        "includes": ["Gym access", "Group classes", "Basic app features"]
+      },
+      {
+        "name": "Premium",
+        "price": "$89/month",
+        "includes": ["All Basic features", "Pool access", "Recovery center", "Guest passes"]
+      },
+      {
+        "name": "Elite",
+        "price": "$149/month",
+        "includes": ["All Premium features", "Personal training credits", "Nutrition counseling", "Priority booking"]
+      }
+    ]
+  },
+  "operatingHours": {
+    "monday": "5:00 AM - 11:00 PM",
+    "tuesday": "5:00 AM - 11:00 PM",
+    "wednesday": "5:00 AM - 11:00 PM",
+    "thursday": "5:00 AM - 11:00 PM",
+    "friday": "5:00 AM - 10:00 PM",
+    "saturday": "6:00 AM - 9:00 PM",
+    "sunday": "7:00 AM - 8:00 PM"
+  },
+  "amenities": {
+    "lockerRooms": {
+      "features": ["Day-use lockers", "Rental lockers", "Showers", "Towel service", "Hair dryers", "Toiletries"]
+    },
+    "childcare": {
+      "available": true,
+      "hours": "Monday-Friday 8AM-2PM, 5PM-8PM",
+      "ageRange": "6 months - 12 years"
+    },
+    "parking": {
+      "spaces": 500,
+      "type": "Free parking",
+      "features": ["Covered parking", "EV charging stations", "Valet service (premium members)"]
+    },
+    "cafe": {
+      "name": "FuelStop Cafe",
+      "offerings": ["Protein smoothies", "Healthy meals", "Supplements", "Sports drinks"]
+    }
+  },
+  "accessibility": {
+    "wheelchairAccessible": true,
+    "elevatorAccess": true,
+    "accessibleParking": true,
+    "adaptiveEquipment": true,
+    "signLanguageInterpreters": "Available upon request"
+  },
+  "certifications": ["IHRSA Member", "Medical Fitness Association", "ACSM Certified", "EPA Indoor Air Quality"],
+  "safety": {
+    "features": ["24/7 security", "Emergency response team", "AED stations", "First aid certified staff"],
+    "protocols": ["Equipment sanitization", "Air filtration system", "Emergency evacuation procedures"]
+  }
+} 

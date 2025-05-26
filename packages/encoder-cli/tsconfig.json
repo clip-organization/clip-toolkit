@@ -16,15 +16,15 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "removeComments": false,
-    "composite": true
+    "composite": true,
+    "types": ["jest", "node"]
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "**/*.test.ts"
+    "dist"
   ],
   "references": [
     { "path": "../validator-core/tsconfig.json" }
