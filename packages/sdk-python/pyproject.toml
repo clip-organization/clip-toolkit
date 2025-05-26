@@ -7,7 +7,7 @@ name = "clip-sdk"
 version = "0.1.0"
 description = "Python SDK for working with CLIP (Context Link Interface Protocol)"
 readme = "README.md"
-license = "MIT"
+license = {text = "MIT"}
 authors = [
     {name = "CLIP Organization"}
 ]
