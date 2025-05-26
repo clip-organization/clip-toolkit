@@ -289,16 +289,19 @@ jobs:
         with:
           path: artifacts/
 
+      - name: Build all packages first
+        run: |
+          echo "Building all packages with TypeScript project references..."
+          npm run build
+
       - name: Run integration tests
         run: |
           echo "Running integration tests across packages..."
           # Test encoder-cli with validator-core
           cd packages/encoder-cli
-          npm run build
           node dist/cli.js generate --type venue --output ../../test-integration.json
           
           cd ../validator-core
-          npm run build
           # Add integration test when validator-core is implemented
           
           # Cleanup
@@ -324,6 +327,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build all packages first
+        run: |
+          echo "Building all packages with TypeScript project references..."
+          npm run build
+
       - name: Check package.json validity
         run: |
           for package in encoder-cli decoder-lib validator-core; do
@@ -338,8 +346,14 @@ jobs:
           for package in encoder-cli decoder-lib validator-core; do
             echo "Verifying build for packages/$package..."
             cd packages/$package
-            npm run build
-            ls -la dist/
+            # Just verify the dist exists, don't rebuild
+            if [ -d "dist" ]; then
+              echo "✓ Build output exists for $package"
+              ls -la dist/
+            else
+              echo "✗ No dist directory found for $package"
+              exit 1
+            fi
             cd ../..
           done
 
