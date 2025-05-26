@@ -43,7 +43,7 @@ program
   .description('Generate a CLIP template')
   .requiredOption('-t, --type <type>', 'Type of CLIP object (venue, device, app)')
   .option('-o, --output <file>', 'Output file (default: stdout)')
-  .option('--template <name>', 'Use a specific template')
+  .option('--template <n>', 'Use a specific template')
   .option('--interactive', 'Interactive mode for filling template')
   .option('--minimal', 'Generate minimal template with required fields only')
   .action(generateCommand);
@@ -63,8 +63,8 @@ program.exitOverride((err) => {
     console.log(packageJson.version);
     process.exit(0);
   }
-  if (err.code === 'commander.help') {
-    console.log(err.message);
+  if (err.code === 'commander.help' || err.code === 'commander.helpDisplayed') {
+    // Help was displayed, exit cleanly
     process.exit(0);
   }
   console.error(chalk.red('Error:'), err.message);
@@ -88,5 +88,6 @@ program.parse();
 
 // If no arguments provided, show help
 if (!process.argv.slice(2).length) {
-  program.help();
+  program.outputHelp();
+  process.exit(0);
 } 
