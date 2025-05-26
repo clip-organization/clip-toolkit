@@ -27,6 +27,6 @@
     "**/*.test.ts"
   ],
   "references": [
-    { "path": "../validator-core" }
+    { "path": "../validator-core/tsconfig.json" }
   ]
 } 

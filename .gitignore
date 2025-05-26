@@ -49,6 +49,10 @@ build/
 out/
 *.out
 
+# TypeScript build info
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
 # Temporary files
 *.tmp
 *.temp
@@ -67,10 +71,39 @@ out/
 *.zip
 *.tar.gz
 
+# Package manager artifacts
+package-lock.json.bak
+yarn.lock.bak
+.yarn/
+.pnp.*
+
+# Python package artifacts
+*.egg-info/
+build/
+dist/
+wheels/
+*.whl
+*.egg
+
 # Test coverage
 coverage/
 .nyc_output/
 *.lcov
+.coverage/
+htmlcov/
+.pytest_cache/
+.cache/
+
+# CI/CD artifacts
+.github/outputs/
+junit.xml
+test-results.xml
+test-report.html
+
+# Security scan results
+.snyk
+bandit.json
+safety-report.json
 
 # Documentation build
 docs/_build/
