@@ -6,6 +6,7 @@ import json
 from unittest.mock import Mock, patch
 
 import pytest
+import requests
 
 from clip_sdk.validator import CLIPValidationError, CLIPValidator
 
@@ -59,7 +60,8 @@ class TestCLIPValidator:
     @patch("clip_sdk.validator.requests.get")
     def test_load_schema_network_error(self, mock_get):
         """Test handling of network errors when loading schema."""
-        mock_get.side_effect = Exception("Network error")
+        # Use a specific exception that will be caught
+        mock_get.side_effect = requests.RequestException("Network error")
 
         validator = CLIPValidator()
 
