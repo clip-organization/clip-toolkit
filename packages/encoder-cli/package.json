@@ -7,7 +7,7 @@
     "clip": "bin/clip"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build",
     "dev": "tsc --watch",
     "test": "jest --passWithNoTests",
     "lint": "eslint src --ext .ts",
