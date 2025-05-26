@@ -2,7 +2,7 @@
 Tests for CLIP Decoder Library - Python Stub Implementation
 """
 
-from typing import Any, Dict
+
 
 import pytest
 
@@ -171,7 +171,10 @@ class TestDecodeVisual(TestDecoderLib):
             DecodeOptions(format="invalid")
 
     def test_accepts_valid_parameters(self):
-        """Test that decode_visual accepts valid parameters but still raises NotImplementedError."""
+        """Test that decode_visual accepts valid parameters.
+        
+        Should still raise NotImplementedError.
+        """
         options = DecodeOptions(format="qr", error_correction="high")
 
         with pytest.raises(
@@ -230,7 +233,10 @@ class TestEncodeVisual(TestDecoderLib):
             encode_visual(incomplete_clip, options)
 
     def test_accepts_valid_parameters(self):
-        """Test that encode_visual accepts valid parameters but still raises NotImplementedError."""
+        """Test that encode_visual accepts valid parameters.
+        
+        Should still raise NotImplementedError.
+        """
         options = EncodeOptions(format="hexmatrix", error_correction="high")
 
         with pytest.raises(

@@ -5,7 +5,7 @@ Tests for CLIPFetcher caching functionality.
 import json
 import tempfile
 import time
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
 import pytest
 import requests
@@ -31,7 +31,8 @@ class TestCLIPFetcherCaching:
         with tempfile.TemporaryDirectory() as temp_dir:
             # Create custom cache in temp directory
             cache = CLIPCache(cache_dir=temp_dir, max_age=3600)
-            fetcher = CLIPFetcher(cache=cache)
+            # Must explicitly enable caching
+            fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
             assert fetcher.cache_enabled is True
             assert fetcher.cache is not None
@@ -56,7 +57,7 @@ class TestCLIPFetcherCaching:
 
         with tempfile.TemporaryDirectory() as temp_dir:
             cache = CLIPCache(cache_dir=temp_dir)
-            fetcher = CLIPFetcher(cache=cache)
+            fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
             url = "https://example.com/clip.json"
 
@@ -80,7 +81,7 @@ class TestCLIPFetcherCaching:
         mock_get.return_value = mock_response
 
         cache = CLIPCache(cache_dir=None)  # Memory only
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         url = "https://example.com/clip.json"
 
@@ -116,7 +117,7 @@ class TestCLIPFetcherCaching:
         mock_get.return_value = mock_response
 
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         url = "https://example.com/clip.json"
 
@@ -149,7 +150,7 @@ class TestCLIPFetcherCaching:
         mock_get.return_value = mock_response
 
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         url = "https://example.com/invalid-clip.json"
 
@@ -171,7 +172,7 @@ class TestCLIPFetcherCaching:
         mock_get.return_value = mock_response
 
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         url = "https://example.com/clip.json"
 
@@ -202,7 +203,7 @@ class TestCLIPFetcherCaching:
         mock_get.return_value = mock_response
 
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         url = "https://example.com/clip.json"
 
@@ -215,7 +216,7 @@ class TestCLIPFetcherCaching:
     def test_cache_management_methods(self):
         """Test cache management methods."""
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         # Add some test data to cache
         cache.set("test_key", {"data": "test"})
@@ -250,7 +251,7 @@ class TestCLIPFetcherCaching:
     def test_set_cache_max_age(self):
         """Test setting cache max age."""
         cache = CLIPCache(cache_dir=None, max_age=3600)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         # Change max age
         fetcher.set_cache_max_age(1800)
@@ -270,7 +271,7 @@ class TestCLIPFetcherCaching:
         mock_get.return_value = mock_response
 
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         urls = [
             "https://example.com/clip1.json",
@@ -313,7 +314,7 @@ class TestCLIPFetcherCaching:
         mock_get.side_effect = side_effect
 
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         urls = [
             "https://example.com/clip1.json",
@@ -330,7 +331,7 @@ class TestCLIPFetcherCaching:
     def test_fetch_file_caching_not_applicable(self):
         """Test that file fetching doesn't use caching."""
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         # Create a temporary CLIP file
         with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
@@ -366,7 +367,7 @@ class TestCLIPFetcherCaching:
         mock_get.return_value = mock_response
 
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         urls = ["https://example.com/clip1.json", "https://example.com/clip2.json"]
 
@@ -410,7 +411,7 @@ class TestCachePerformance:
         mock_get.side_effect = slow_response
 
         cache = CLIPCache(cache_dir=None)
-        fetcher = CLIPFetcher(cache=cache)
+        fetcher = CLIPFetcher(cache=cache, cache_enabled=True)
 
         url = "https://example.com/slow-clip.json"
 

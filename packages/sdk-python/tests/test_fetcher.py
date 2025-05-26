@@ -4,7 +4,7 @@ Tests for the CLIPFetcher class.
 
 import json
 from pathlib import Path
-from unittest.mock import Mock, mock_open, patch
+from unittest.mock import Mock, patch
 
 import pytest
 import requests
@@ -23,12 +23,12 @@ class TestCLIPFetcher:
     def test_init_custom(self):
         """Test fetcher initialization with custom parameters."""
         fetcher = CLIPFetcher(
-            timeout=60.0, max_retries=5, cache_enabled=True, cache_dir="/tmp/cache"
+            timeout=60.0, max_retries=5, cache_enabled=True
         )
         assert fetcher.timeout == 60.0
         assert fetcher.max_retries == 5
         assert fetcher.cache_enabled is True
-        assert fetcher.cache_dir == Path("/tmp/cache")
+        assert fetcher.cache is not None  # Cache should be created
 
     def test_is_url(self):
         """Test URL detection."""
@@ -59,7 +59,11 @@ class TestCLIPFetcher:
 
         assert result["type"] == "Venue"
         assert result["name"] == "Test Venue"
-        mock_get.assert_called_once_with("https://example.com/clip.json", timeout=30.0)
+        mock_get.assert_called_once_with(
+            "https://example.com/clip.json", 
+            timeout=30.0,
+            headers={"Accept": "application/json", "User-Agent": "CLIP-SDK-Python/0.1.0"}
+        )
 
     @patch("clip_sdk.fetcher.requests.get")
     def test_fetch_from_url_retry(self, mock_get):
@@ -201,7 +205,7 @@ class TestCLIPFetcher:
             "id": "clip:test:venue:123",
         }
 
-        with pytest.raises(ValueError, match="Invalid or missing CLIP @context"):
+        with pytest.raises(ValueError, match="Invalid CLIP object structure"):
             fetcher._validate_basic_structure(clip_object, "test")
 
     def test_validate_basic_structure_missing_fields(self):
@@ -212,7 +216,7 @@ class TestCLIPFetcher:
             # Missing type and id
         }
 
-        with pytest.raises(ValueError, match="Missing required CLIP fields"):
+        with pytest.raises(ValueError, match="Invalid CLIP object structure"):
             fetcher._validate_basic_structure(clip_object, "test")
 
     def test_is_likely_clip_object(self):

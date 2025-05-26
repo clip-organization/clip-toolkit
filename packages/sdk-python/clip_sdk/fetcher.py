@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 
 import requests
 
-from .async_fetcher import AsyncCLIPFetcher, AsyncCLIPFetchError
+from .async_fetcher import AsyncCLIPFetcher
 from .cache import CLIPCache, get_default_cache_dir
 from .utils import load_json_from_path
 
@@ -334,7 +334,9 @@ class CLIPFetcher:
         max_concurrent: int = 10,
     ) -> List[Union[Dict[str, Any], Exception]]:
         """
-        Asynchronously fetch multiple CLIP objects, returning all results including exceptions.
+        Asynchronously fetch multiple CLIP objects, returning all results.
+
+        Includes exceptions for failed fetches.
 
         Args:
             sources: List of URLs or file paths

@@ -3,18 +3,11 @@ Tests for the CLIPObject class and related models.
 """
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime
 
 import pytest
 
-from clip_sdk.clip_object import (
-    CLIPAction,
-    CLIPFeature,
-    CLIPLocation,
-    CLIPObject,
-    CLIPPersona,
-    CLIPService,
-)
+from clip_sdk.clip_object import CLIPLocation, CLIPObject
 
 
 class TestCLIPLocation:

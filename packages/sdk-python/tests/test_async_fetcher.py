@@ -13,7 +13,7 @@ import aiohttp
 import pytest
 from aioresponses import aioresponses
 
-from clip_sdk import AsyncCLIPFetcher, AsyncCLIPFetchError, CLIPCache, CLIPFetcher
+from clip_sdk import AsyncCLIPFetcher, AsyncCLIPFetchError, CLIPFetcher
 
 # Test data
 VALID_CLIP_OBJECT = {
@@ -467,10 +467,7 @@ class TestPerformanceComparison:
         """Compare performance of sync vs async batch fetching."""
         urls = [f"https://api.example.com/clip/{i}" for i in range(10)]
 
-        # Test sync fetcher
-        sync_fetcher = CLIPFetcher(cache_enabled=False)
-
-        # Test async fetcher
+        # Test async fetcher (sync fetcher is tested in a separate test file)
         async_fetcher = AsyncCLIPFetcher(cache_enabled=False)
 
         with aioresponses() as m:

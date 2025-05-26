@@ -9,10 +9,9 @@ import hashlib
 import json
 import logging
 import os
-import time
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -274,7 +273,7 @@ class CLIPCache:
                         original_key = cache_data.get("original_key", "")
                         if pattern not in original_key:
                             continue
-                    except:
+                    except Exception:
                         pass
 
                 try:
@@ -353,7 +352,7 @@ class CLIPCache:
                     expires_time = parsedate_to_datetime(expires_header)
                     age_seconds = (expires_time - datetime.now()).total_seconds()
                     return max(0, int(age_seconds))
-                except:
+                except Exception:
                     pass
 
         # Use default max_age

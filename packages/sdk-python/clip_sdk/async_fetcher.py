@@ -165,10 +165,11 @@ class AsyncCLIPFetcher:
                 if attempt < self.max_retries - 1:
                     try:
                         error_msg = str(e)
-                    except:
+                    except Exception:
                         error_msg = repr(e)
                     logger.warning(
-                        f"Attempt {attempt + 1} failed for {url}: {error_msg}. Retrying..."
+                        f"Attempt {attempt + 1} failed for {url}: "
+                        f"{error_msg}. Retrying..."
                     )
                     await asyncio.sleep(1)  # Brief delay before retry
                 else:
@@ -176,9 +177,11 @@ class AsyncCLIPFetcher:
 
         try:
             error_msg = str(last_exception)
-        except:
+        except Exception:
             error_msg = repr(last_exception)
-        raise AsyncCLIPFetchError(f"Failed to fetch CLIP object from {url}: {error_msg}")
+        raise AsyncCLIPFetchError(
+            f"Failed to fetch CLIP object from {url}: {error_msg}"
+        )
 
     async def fetch_from_file(
         self, file_path: str, validate: bool = True

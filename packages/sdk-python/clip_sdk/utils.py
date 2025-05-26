@@ -3,7 +3,6 @@ Utility functions for the CLIP SDK.
 """
 
 import json
-import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 

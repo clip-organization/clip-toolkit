@@ -5,11 +5,9 @@ CLIP object validation using JSON Schema.
 import json
 import logging
 from typing import Any, Dict, List, Optional, Union
-from urllib.parse import urlparse
 
-import jsonschema
 import requests
-from jsonschema import Draft202012Validator, ValidationError, validate
+from jsonschema import Draft202012Validator, ValidationError
 from jsonschema.validators import RefResolver
 
 from .utils import load_json_from_path
@@ -234,9 +232,15 @@ class CLIPValidator:
                 "This field is required. Make sure to include it in your CLIP object."
             )
         elif "format" in error.message:
-            return "Check the format of this field. It may need to be a valid URL, email, or date."
+            return (
+                "Check the format of this field. "
+                "It may need to be a valid URL, email, or date."
+            )
         elif "type" in error.message:
-            return "Check the data type. This field may need to be a string, number, object, or array."
+            return (
+                "Check the data type. This field may need to be a "
+                "string, number, object, or array."
+            )
         elif "enum" in error.message:
             return (
                 "This field must be one of the allowed values specified in the schema."
