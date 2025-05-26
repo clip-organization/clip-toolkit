@@ -94,18 +94,9 @@ jobs:
 
       - name: Check TypeScript types for ${{ matrix.package }}
         run: |
-          # Ensure all monorepo packages are built using root tsc --build
-          # This also performs type checking.
-          npm run build
-
-          # Verify the specific package ${{ matrix.package }} was built (and thus type-checked)
-          echo "Verifying build for packages/${{ matrix.package }} for type checking purposes"
-          if [ -d "packages/${{ matrix.package }}/dist" ]; then
-            echo "✅ types checked for packages/${{ matrix.package }}."
-          else
-            echo "❌ ERROR: packages/${{ matrix.package }}/dist was NOT created during type check build!"
-            exit 1
-          fi
+          # Use TypeScript project references for proper module resolution
+          cd packages/${{ matrix.package }}
+          npx tsc --build --force
         continue-on-error: false
 
   test:
@@ -193,16 +184,17 @@ jobs:
 
       - name: Build ${{ matrix.package }}
         run: |
-          # 1. Ensure all monorepo packages are built using root tsc --build
+          # First ensure all packages are built in dependency order
+          echo "Building all packages with TypeScript project references..."
           npm run build
-
-          # 2. Verify the specific package ${{ matrix.package }} was built
-          echo "Verifying build for packages/${{ matrix.package }}"
+          
+          # Verify the specific package was built
+          echo "Checking build output for ${{ matrix.package }}..."
           if [ -d "packages/${{ matrix.package }}/dist" ]; then
-            echo "✅ packages/${{ matrix.package }}/dist exists."
+            echo "✓ Build successful for ${{ matrix.package }}"
             ls -la packages/${{ matrix.package }}/dist/
           else
-            echo "❌ ERROR: packages/${{ matrix.package }}/dist was NOT created!"
+            echo "✗ Build failed for ${{ matrix.package }} - no dist directory found"
             exit 1
           fi
 

@@ -2,7 +2,6 @@
   "name": "clip-toolkit",
   "version": "0.1.0",
   "description": "Open-source tools and SDKs for working with CLIP (Context Link Interface Protocol)",
-  "type": "module",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -27,8 +26,8 @@
   },
   "homepage": "https://github.com/clip-organization/clip-toolkit#readme",
   "scripts": {
-    "build": "tsc --build",
-    "clean": "tsc --build --clean",
+    "build": "tsc --build tsconfig.build.json",
+    "clean": "tsc --build tsconfig.build.json --clean",
     "test": "npm run test --workspaces",
     "lint": "npm run lint --workspaces",
     "dev": "tsc --build --watch"
