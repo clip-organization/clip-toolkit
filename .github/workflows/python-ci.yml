@@ -119,7 +119,7 @@ jobs:
 
       - name: Upload bandit report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bandit-report-${{ matrix.package }}
           path: packages/${{ matrix.package }}/bandit-report.json
@@ -179,7 +179,7 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.package }}-${{ matrix.python-version }}-${{ matrix.os }}
           path: |
@@ -246,7 +246,7 @@ jobs:
 
       - name: Upload security reports
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: security-reports-${{ matrix.package }}
           path: |
@@ -312,7 +312,7 @@ jobs:
 
       - name: Upload build artifacts
         if: matrix.python-version == '3.9'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.package }}-build-${{ github.sha }}
           path: packages/${{ matrix.package }}/dist/
