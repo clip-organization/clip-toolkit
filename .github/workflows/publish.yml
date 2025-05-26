@@ -178,7 +178,7 @@ jobs:
           npm pack --dry-run
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: typescript-${{ matrix.package }}-${{ needs.validate.outputs.version }}
           path: packages/${{ matrix.package }}/
@@ -249,7 +249,7 @@ jobs:
           twine check dist/*
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: python-${{ matrix.package }}-${{ needs.validate.outputs.version }}
           path: packages/${{ matrix.package }}/dist/
@@ -260,7 +260,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, build-typescript]
     if: needs.validate.outputs.should-publish-npm == 'true'
-    environment: npm-production
     strategy:
       matrix:
         package: [encoder-cli, decoder-lib, validator-core]
@@ -275,7 +274,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: typescript-${{ matrix.package }}-${{ needs.validate.outputs.version }}
           path: packages/${{ matrix.package }}/
@@ -314,7 +313,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, build-python]
     if: needs.validate.outputs.should-publish-pypi == 'true'
-    environment: pypi-production
     strategy:
       matrix:
         package: [sdk-python, decoder-python]
@@ -333,7 +331,7 @@ jobs:
           pip install twine
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: python-${{ matrix.package }}-${{ needs.validate.outputs.version }}
           path: packages/${{ matrix.package }}/dist/
@@ -440,15 +438,14 @@ jobs:
           echo "changelog_file=CHANGELOG.md" >> $GITHUB_OUTPUT
 
       - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ needs.validate.outputs.version }}
-          release_name: Release v${{ needs.validate.outputs.version }}
+          name: Release v${{ needs.validate.outputs.version }}
           body_path: ${{ steps.changelog.outputs.changelog_file }}
           draft: false
           prerelease: ${{ contains(needs.validate.outputs.version, '-') }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   notify:
     name: Notify Success
