@@ -10,6 +10,8 @@ on:
       - '.github/workflows/typescript-ci.yml'
       - 'package.json'
       - 'package-lock.json'
+      - 'eslint.config.js'
+      - 'tsconfig*.json'
   pull_request:
     branches: [ main, develop ]
     paths:
@@ -19,6 +21,14 @@ on:
       - '.github/workflows/typescript-ci.yml'
       - 'package.json'
       - 'package-lock.json'
+      - 'eslint.config.js'
+      - 'tsconfig*.json'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual run'
+        required: false
+        default: 'Manual trigger'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
