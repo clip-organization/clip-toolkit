@@ -52,7 +52,6 @@ Issues = "https://github.com/clip-organization/clip-toolkit/issues"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["decoder_lib*"]
-exclude = ["tests*"]
 
 [tool.black]
 line-length = 88
