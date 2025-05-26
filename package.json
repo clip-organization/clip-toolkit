@@ -33,7 +33,7 @@
     "dev": "tsc --build --watch"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/node": "^22.15.21",
     "typescript": "^5.0.0",
     "prettier": "^3.0.0",
     "eslint": "^9.0.0",
