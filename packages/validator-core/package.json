@@ -24,7 +24,7 @@
   "dependencies": {
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
-    "axios": "^1.5.0",
+    "axios": "^1.12.2",
     "fs-extra": "^11.1.1"
   },
   "devDependencies": {

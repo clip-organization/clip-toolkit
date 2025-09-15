@@ -26,7 +26,7 @@
     "@clip-toolkit/validator-core": "^0.1.0",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
-    "axios": "^1.5.0",
+    "axios": "^1.12.2",
     "chalk": "^4.1.2",
     "commander": "^11.0.0",
     "glob": "^10.3.0",
